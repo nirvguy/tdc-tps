@@ -14,6 +14,9 @@ class Fuente:
             raise Exception("No se registraron muestras en la fuente")
         return {(s, c / self.cantidad_muestras) for s, c in self.muestras.items()}
 
+    def informacion(self):
+        return {s: -math.log2(p) for s, p in self.probabilidades()}
+
     def entropia(self):
         return -sum(p * math.log2(p) for _, p in self.probabilidades())
 

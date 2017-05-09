@@ -26,6 +26,7 @@ def main():
         sniff(prn=packet_callback, store=0, timeout=args.timeout)
     print(fuente)
     print("Entropia : {}".format(fuente.entropia()))
+    print("Informacion: \n{}".format(str(fuente.informacion())))
 
 
 if __name__ == '__main__':
