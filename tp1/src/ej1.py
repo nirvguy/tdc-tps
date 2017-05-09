@@ -19,6 +19,7 @@ def main():
     parser = argparse.ArgumentParser(description='Modelado de fuente unicast/broadcast')
     parser.add_argument('-t', "--timeout", type=int, default=TIMEOUT_DEFAULT, help='Tiempo de sniffeo')
     parser.add_argument('-i', "--iface", type=str, help='Interface de sniffeo')
+    parser.add_argument('-f', "--fuente", type=str, choices=('u_m'), default='u_m')
     args = parser.parse_args()
     if args.iface:
         sniff(iface=args.iface, prn=packet_callback, store=0, timeout=args.timeout)
