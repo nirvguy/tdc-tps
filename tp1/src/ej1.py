@@ -16,6 +16,7 @@ def packet_callback(packet):
 def main():
     sniff(iface=config.EJ1_IFACE, prn=packet_callback, store=0, timeout=60)
     print(fuente)
+    print("Entropia : {}".format(fuente.entropia()))
 
 if __name__ == '__main__':
     main()
