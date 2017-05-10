@@ -14,6 +14,7 @@ def plot(information):
     ax.set_xticks(ind)
     ax.set_ylabel('Información')
     ax.set_xticklabels(labels, rotation=45)
+    fig.tight_layout()
     fig.savefig(sys.stdout.buffer)
 
 def main():
