@@ -8,7 +8,7 @@ def plot(probabilidades):
     labels = ["{} ({:3.2f}%)".format(s, p * 100.0) for s, p in probabilidades.items()]
     sizes = [ i * 100 for i in probabilidades.values() ]
     fig, ax = plt.subplots()
-    patches = ax.pie(sizes, autopct='%1.1f%%', startangle=90)
+    patches = ax.pie(sizes, autopct='%1.1f%%', startangle=90, shadow=True)
     ax.legend(labels=labels, loc="best")
     plt.axis('equal')
     fig.savefig(sys.stdout.buffer)
