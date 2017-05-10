@@ -5,10 +5,12 @@ import json
 import matplotlib.pyplot as plt
 
 def plot(probabilidades):
-    labels = probabilidades.keys()
+    labels = ["{} ({:3.2f}%)".format(s, p * 100.0) for s, p in probabilidades.items()]
     sizes = [ i * 100 for i in probabilidades.values() ]
-    fig, ax1 = plt.subplots()
-    ax1.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90)
+    fig, ax = plt.subplots()
+    patches = ax.pie(sizes, autopct='%1.1f%%', startangle=90)
+    ax.legend(labels=labels, loc="best")
+    plt.axis('equal')
     fig.savefig(sys.stdout.buffer)
 
 def main():
