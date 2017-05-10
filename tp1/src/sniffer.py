@@ -7,12 +7,13 @@ from fuente import Fuente
 
 UNICAST = 'unicast'
 MULTICAST = 'multicast'
+MAC_MULTICAST = 'ff:ff:ff:ff:ff:ff'
 TIMEOUT_DEFAULT = 60 * 10
 
 fuente = Fuente(simbolos=(UNICAST, MULTICAST))
 
-def packet_callback(packet):
-    if packet.dst == 'ff:ff:ff:ff:ff:ff':
+def sniff_uni_multi_callback(packet):
+    if packet.dst == MAC_MULTICAST:
         fuente.agregar_muestra(MULTICAST)
     else:
         fuente.agregar_muestra(UNICAST)
@@ -26,19 +27,23 @@ def main():
     parser.add_argument("--no-use-json", dest='use_json', action='store_false')
     parser.set_defaults(use_json=False)
     args = parser.parse_args()
+
     if args.iface:
-        sniff(iface=args.iface, prn=packet_callback, store=0, timeout=args.timeout)
+        sniff(iface=args.iface, prn=sniff_uni_multi_callback, store=0, timeout=args.timeout)
     else:
-        sniff(prn=packet_callback, store=0, timeout=args.timeout)
+        sniff(prn=sniff_uni_multi_callback, store=0, timeout=args.timeout)
+
     result = {'probabilities': dict(fuente.probabilidades()),
               'information': dict(fuente.informacion()),
               'entropy': fuente.entropia()}
+
     if args.use_json:
         print(json.dumps(result, indent=4))
     else:
         def print_dict(dicc):
             for x, y in dicc.items():
                 print("\t{}: {}".format(x,y))
+
         print("Probabilidades: ")
         print_dict(result['probabilities'])
         print("Informacion: ")
