@@ -1,0 +1,68 @@
+\documentclass[final,inline,a4paper,narroweqnarray]{ieee}
+% In order to use the figure-defining commands in ieeefig.sty...
+\usepackage{ieeefig}
+% To use utf8 encoding
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+% to place figures
+\usepackage{float}
+\usepackage{graphicx}
+% dont use geometry package
+%\usepackage{geometry}
+
+% "hack" to place figures in subsection
+\usepackage{placeins}
+\let\Oldsection\section
+\renewcommand{\section}{\FloatBarrier\Oldsection}
+\let\Oldsubsection\subsection
+\renewcommand{\subsection}{\FloatBarrier\Oldsubsection}
+\let\Oldsubsubsection\subsubsection
+\renewcommand{\subsubsection}{\FloatBarrier\Oldsubsubsection}
+
+\begin{document}
+
+%----------------------------------------------------------------------
+% Title Information, Abstract and Keywords
+%----------------------------------------------------------------------
+\title[TP 1: Wiretapping]{%
+Trabajo Práctico 1: Wiretapping}
+
+% format author this way for journal articles.
+\author[Mauro, Ortiz, Sosa]{%
+	Mauro (???/??)
+	\and
+	Lucas Tavolaro Ortiz (???/??)
+	\and
+	Sosa Juan Cruz (733/12)
+}
+
+% make the title
+\maketitle
+
+% do the abstract
+\begin{abstract}
+
+% TODO: Abstract
+
+
+\end{abstract}
+
+% start the main text ...
+
+%----------------------------------------------------------------------
+% SECTION I: Introduction
+%----------------------------------------------------------------------
+\section{ Introducción }
+\include{introduccion}
+
+\section{Desarrollo}
+\include{desarrollo}
+
+\section{Resultados}
+\include{resultados}
+
+\section{Conclusiones}
+\include{conclusiones}
+
+\end{document}
