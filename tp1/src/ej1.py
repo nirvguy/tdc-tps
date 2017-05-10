@@ -1,5 +1,7 @@
 #!/usr/bin/python3
+import sys
 import argparse
+import json
 from scapy.all import *
 from fuente import Fuente
 
@@ -25,9 +27,10 @@ def main():
         sniff(iface=args.iface, prn=packet_callback, store=0, timeout=args.timeout)
     else:
         sniff(prn=packet_callback, store=0, timeout=args.timeout)
-    print(fuente)
-    print("Entropia : {}".format(fuente.entropia()))
-    print("Informacion: \n{}".format(str(fuente.informacion())))
+    result = {'probabilities': dict(fuente.probabilidades()),
+              'information': dict(fuente.informacion()),
+              'entropy': fuente.entropia()}
+    print(json.dumps(result, indent=4))
 
 
 if __name__ == '__main__':
