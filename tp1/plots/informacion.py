@@ -4,13 +4,15 @@ import sys
 import json
 import matplotlib.pyplot as plt
 
-def plot(information):
+def plot(information, entropy):
     fig, ax = plt.subplots()
     ind = range(len(information))
     labels = information.keys()
     bar_width = fig.get_size_inches()[0]/len(information)
     information = information.values()
     ax.bar(ind, information, bar_width)
+    ax.axhline(y=entropy, color='orange')
+    ax.text(8, entropy + 0.1, 'Entropía', color='orange', fontsize=20)
     ax.set_xticks(ind)
     ax.set_ylabel('Información')
     ax.set_xticklabels(labels, rotation=45)
@@ -27,10 +29,10 @@ def main():
         str_json = json_file.read()
         data = json.loads(str_json)
 
-        if 'information' not in data:
+        if 'information' not in data or 'entropy' not in data:
             raise Exception("Archivo json invalido!")
 
-        plot(data['information'])
+        plot(data['information'], data['entropy'])
 
 if __name__ == '__main__':
     main()
