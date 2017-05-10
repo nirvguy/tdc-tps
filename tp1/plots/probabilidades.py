@@ -4,9 +4,9 @@ import sys
 import json
 import matplotlib.pyplot as plt
 
-def plot(information):
-    labels = information.keys()
-    sizes = [ i * 100 for i in information.values() ]
+def plot(probabilidades):
+    labels = probabilidades.keys()
+    sizes = [ i * 100 for i in probabilidades.values() ]
     fig, ax1 = plt.subplots()
     ax1.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90)
     fig.savefig(sys.stdout.buffer)
@@ -21,10 +21,10 @@ def main():
         str_json = json_file.read()
         data = json.loads(str_json)
 
-        if 'information' not in data:
+        if 'probabilities' not in data:
             raise Exception("Archivo json invalido!")
 
-        plot(data['information'])
+        plot(data['probabilities'])
 
 if __name__ == '__main__':
     main()
