@@ -8,11 +8,11 @@ def plot(information, entropy):
     fig, ax = plt.subplots()
     ind = range(len(information))
     labels = information.keys()
-    bar_width = fig.get_size_inches()[0]/len(information)
+    bar_width = 0.3
     information = information.values()
     ax.bar(ind, information, bar_width)
     ax.axhline(y=entropy, color='orange')
-    ax.text(8, entropy + 0.1, 'Entropía', color='orange', fontsize=20)
+    ax.text(0.5, entropy + 0.1, 'Entropía', color='orange', fontsize=20)
     ax.set_xticks(ind)
     ax.set_ylabel('Información')
     ax.set_xticklabels(labels, rotation=45)
