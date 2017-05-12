@@ -10,7 +10,7 @@ MULTICAST = 'multicast'
 MAC_MULTICAST = 'ff:ff:ff:ff:ff:ff'
 TIMEOUT_DEFAULT = 60 * 10
 
-fuente = Fuente(simbolos=(UNICAST, MULTICAST))
+fuente = Fuente()
 
 def sniff_uni_multi_callback(packet):
     if packet.dst == MAC_MULTICAST:

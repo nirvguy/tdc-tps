@@ -2,7 +2,7 @@
 import math
 
 class Fuente:
-    def __init__(self, simbolos):
+    def __init__(self, simbolos=[]):
         self.muestras = {s: 0 for s in simbolos}
         self.cantidad_muestras = 0
     
