@@ -18,8 +18,13 @@ def sniff_uni_multi_callback(packet):
     else:
         fuente.agregar_muestra(UNICAST)
 
+def sniff_arp_callback(packet):
+    if packet[ARP].op == 1: # Who has
+        fuente.agregar_muestra(packet.psrc)
+
 def main():
     parser = argparse.ArgumentParser(description='Modelado de fuente unicast/broadcast')
+    parser.add_argument('-s', "--source", choices=('1','2'), default='2')
     parser.add_argument('-t', "--timeout", type=int, default=TIMEOUT_DEFAULT, help='Tiempo de sniffeo')
     parser.add_argument('-i', "--iface", type=str, help='Interface de sniffeo')
     parser.add_argument('-f', "--fuente", type=str, choices=('u_m'), default='u_m')
@@ -28,10 +33,18 @@ def main():
     parser.set_defaults(use_json=False)
     args = parser.parse_args()
 
-    if args.iface:
-        sniff(iface=args.iface, prn=sniff_uni_multi_callback, store=0, timeout=args.timeout)
+    sniff_extra_args = dict()
+
+    if args.source == '1':
+        sniff_extra_args['prn'] = sniff_uni_multi_callback
     else:
-        sniff(prn=sniff_uni_multi_callback, store=0, timeout=args.timeout)
+        sniff_extra_args['prn'] = sniff_arp_callback
+        sniff_extra_args['filter'] = 'arp'
+
+    if args.iface:
+        sniff_extra_args['iface'] = args.iface
+
+    sniff(store=0, timeout=args.timeout, **sniff_extra_args)
 
     result = {'probabilities': dict(fuente.probabilidades()),
               'information': dict(fuente.informacion()),
