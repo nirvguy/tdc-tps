@@ -12,21 +12,19 @@ TIMEOUT_DEFAULT = 60 * 10
 
 fuente = Fuente()
 
-def sniff_uni_multi_callback(packet):
+def analize_uni_multi_cast(packet):
     if packet.dst == MAC_MULTICAST:
         fuente.agregar_muestra(MULTICAST)
     else:
         fuente.agregar_muestra(UNICAST)
 
-def sniff_arp_callback(packet):
-    fuente.agregar_muestra(packet.psrc)
+def analize_arp(packet):
+    fuente.agregar_muestra(packet.pdst)
 
 def main():
     parser = argparse.ArgumentParser(description='Modelado de fuente unicast/broadcast')
-    parser.add_argument('-s', "--source", choices=('1','2'), default='2')
-    parser.add_argument('-t', "--timeout", type=int, default=TIMEOUT_DEFAULT, help='Tiempo de sniffeo')
-    parser.add_argument('-i', "--iface", type=str, help='Interface de sniffeo')
-    parser.add_argument('-f', "--fuente", type=str, choices=('u_m'), default='u_m')
+    parser.add_argument('captura', type=str, help='Captura')
+    parser.add_argument('-s', "--source", type=str, choices=('u_m', 'arp'), default='u_m')
     parser.add_argument('-j', "--use-json", dest='use_json', action='store_true')
     parser.add_argument("--no-use-json", dest='use_json', action='store_false')
     parser.set_defaults(use_json=False)
@@ -34,16 +32,14 @@ def main():
 
     sniff_extra_args = dict()
 
-    if args.source == '1':
-        sniff_extra_args['prn'] = sniff_uni_multi_callback
+    packet_analyze = None
+
+    if args.source == 'u_m':
+        packet_analyze = analize_uni_multi_cast
     else:
-        sniff_extra_args['prn'] = sniff_arp_callback
-        sniff_extra_args['filter'] = 'arp'
+        packet_analyze = analize_arp
 
-    if args.iface:
-        sniff_extra_args['iface'] = args.iface
-
-    sniff(store=0, timeout=args.timeout, **sniff_extra_args)
+    packets = sniff(offline=args.captura, prn=packet_analyze)
 
     result = {'probabilities': dict(fuente.probabilidades()),
               'information': dict(fuente.informacion()),
