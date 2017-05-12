@@ -4,6 +4,7 @@ import argparse
 import json
 from scapy.all import *
 from fuente import Fuente
+from grafo import Grafo
 
 UNICAST = 'unicast'
 MULTICAST = 'multicast'
@@ -11,6 +12,7 @@ MAC_MULTICAST = 'ff:ff:ff:ff:ff:ff'
 TIMEOUT_DEFAULT = 60 * 10
 
 fuente = Fuente()
+grafo = Grafo()
 
 def analize_uni_multi_cast(packet):
     if packet.dst == MAC_MULTICAST:
@@ -19,7 +21,13 @@ def analize_uni_multi_cast(packet):
         fuente.agregar_muestra(UNICAST)
 
 def analize_arp(packet):
+    if ARP not in packet:
+        return
     fuente.agregar_muestra(packet.pdst)
+    p_src, p_dest = packet.src, packet.dst
+    grafo.agregar_nodo(p_src)
+    grafo.agregar_nodo(p_dest)
+    grafo.agregar_arista(p_src, p_dest)
 
 def main():
     parser = argparse.ArgumentParser(description='Modelado de fuente unicast/broadcast')
@@ -46,8 +54,12 @@ def main():
               'information': dict(fuente.informacion()),
               'entropy': fuente.entropia()}
 
+    if args.source == 'arp':
+        result['graph'] = dict({'nodes' : list(grafo.nodos),
+                                'edges' : grafo.lista_aristas()})
+
     if args.use_json:
-        print(json.dumps(result, indent=4))
+        print(json.dumps(result, indent=6))
     else:
         def print_dict(dicc):
             for x, y in dicc.items():
