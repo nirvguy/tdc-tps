@@ -38,8 +38,9 @@ def main():
         packet_analyze = analize_uni_multi_cast
     else:
         packet_analyze = analize_arp
+        sniff_extra_args['filter'] = 'arp'
 
-    packets = sniff(offline=args.captura, prn=packet_analyze)
+    packets = sniff(offline=args.captura, prn=packet_analyze, store=0, **sniff_extra_args)
 
     result = {'probabilities': dict(fuente.probabilidades()),
               'information': dict(fuente.informacion()),
