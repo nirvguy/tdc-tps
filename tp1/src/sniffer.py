@@ -19,8 +19,7 @@ def sniff_uni_multi_callback(packet):
         fuente.agregar_muestra(UNICAST)
 
 def sniff_arp_callback(packet):
-    if packet[ARP].op == 1: # Who has
-        fuente.agregar_muestra(packet.psrc)
+    fuente.agregar_muestra(packet.psrc)
 
 def main():
     parser = argparse.ArgumentParser(description='Modelado de fuente unicast/broadcast')
