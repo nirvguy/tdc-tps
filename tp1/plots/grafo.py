@@ -1,13 +1,17 @@
 #!/usr/bin/python3
 import sys
 import json
-from graphviz import Graph
+import networkx as nx
+import matplotlib.pyplot as plt
+ 
 
-def plot(dot, graph):
-    for u in graph['nodes']:
-        dot.node(u, "", color='blue', pos="0,0!")
+def plot(graph):
+    G = nx.Graph()
+    G.add_nodes_from(graph['nodes'])
     for u, v, c in graph['edges']:
-        dot.edge(u, v)
+        G.add_edge(u, v, label=str(c))
+    nx.draw(G, with_labels=False, node_color="blue", alpha= 0.6, node_size=50,
+            pos=nx.spring_layout(G))
 
 
 def main():
@@ -25,9 +29,9 @@ def main():
            'edges' not in data['graph']:
             raise Exception("Archivo json invalido!")
 
-        dot = Graph(comment='Graph')
-        plot(dot, data['graph'])
-        dot.render(filename + '.pdf', view=True)
+        plot(data['graph'])
+        plt.savefig(filename + ".png")
+        plt.show()
 
 if __name__ == '__main__':
     main()
