@@ -30,8 +30,7 @@ def main():
             raise Exception("Archivo json invalido!")
 
         plot(data['graph'])
-        plt.savefig(filename + ".png")
-        plt.show()
+        plt.savefig(sys.stdout.buffer)
 
 if __name__ == '__main__':
     main()

@@ -15,7 +15,7 @@ def plot(information, entropy):
     ax.text(0.5, entropy + 0.1, 'Entropía', color='orange', fontsize=20)
     ax.set_xticks(ind)
     ax.set_ylabel('Información')
-    ax.set_xticklabels(labels, rotation=45)
+    ax.set_xticklabels(labels, rotation=90)
     fig.tight_layout()
     fig.savefig(sys.stdout.buffer)
 

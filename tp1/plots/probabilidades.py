@@ -7,10 +7,11 @@ import matplotlib.pyplot as plt
 def plot(probabilidades):
     labels = ["{} ({:3.2f}%)".format(s, p * 100.0) for s, p in probabilidades.items()]
     sizes = [ i * 100 for i in probabilidades.values() ]
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(10, 10))
     patches = ax.pie(sizes, autopct='%1.1f%%', startangle=90, shadow=True)
     ax.legend(labels=labels, loc="best")
-    plt.axis('equal')
+    # plt.axis('equal')
+    fig.tight_layout()
     fig.savefig(sys.stdout.buffer)
 
 def main():
