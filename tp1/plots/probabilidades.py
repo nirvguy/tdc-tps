@@ -3,23 +3,24 @@
 import sys
 import json
 import matplotlib.pyplot as plt
+import operator
 
 def plot(probabilidades):
     def destacados():
         max_prob = None
-        for _, p in probabilidades.items():
+        for _, p in probabilidades:
             if max_prob is None:
                 max_prob = p
             elif max_prob < p:
                 max_prob = p
-        return [0.1 if p == max_prob else 0.0 for _, p in probabilidades.items()]
+        return [0.05 if p == max_prob else 0.0 for _, p in probabilidades]
 
     explode = destacados()
-    labels = ["{} ({:3.2f}%)".format(s, p * 100.0) for s, p in probabilidades.items()]
-    sizes = [ i * 100 for i in probabilidades.values() ]
+    labels = ["{} ({:3.2f}%)".format(s, p * 100.0) for s, p in probabilidades]
+    sizes = [ p * 100 for _, p in probabilidades ]
     fig, ax = plt.subplots(figsize=(10, 10))
-    ax.legend(labels=labels, loc="best")
     patches = ax.pie(sizes, autopct='%1.1f%%', startangle=90, shadow=True, explode=explode)
+    ax.legend(labels=labels, loc="best")
     # plt.axis('equal')
     fig.tight_layout()
     fig.savefig(sys.stdout.buffer)
@@ -37,7 +38,8 @@ def main():
         if 'probabilities' not in data:
             raise Exception("Archivo json invalido!")
 
-        plot(data['probabilities'])
+        probabilidades = sorted(data['probabilities'].items(), key=operator.itemgetter(1), reverse=True)
+        plot(probabilidades)
 
 if __name__ == '__main__':
     main()
