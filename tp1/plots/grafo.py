@@ -10,10 +10,10 @@ def plot(graph):
     G.add_nodes_from(graph['nodes'])
     for u, v, c in graph['edges']:
         G.add_edge(u, v, cost=str(c)) 
-    edge_labels = nx.get_edge_attributes(G, 'cost')
+    # edge_labels = nx.get_edge_attributes(G, 'cost')
     pos = nx.spring_layout(G)
     nx.draw(G,pos=pos, node_size=24, alpha=0.5)
-    nx.draw_networkx_edge_labels(G,pos=pos, edge_labels=edge_labels, alpha=0.5)
+    # nx.draw_networkx_edge_labels(G,pos=pos, edge_labels=edge_labels, alpha=0.5)
 
 
 def main():
