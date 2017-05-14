@@ -3,7 +3,10 @@
 import sys
 import json
 import matplotlib.pyplot as plt
+import matplotlib.cm as cm
+import numpy as np
 import operator
+import random
 
 def plot(probabilidades):
     def destacados():
@@ -16,10 +19,11 @@ def plot(probabilidades):
         return [0.05 if p == max_prob else 0.0 for _, p in probabilidades]
 
     explode = destacados()
+    colors = list(reversed(cm.rainbow(np.linspace(0, 1, len(probabilidades)))))
     labels = ["{} ({:3.2f}%)".format(s, p * 100.0) for s, p in probabilidades]
     sizes = [ p * 100 for _, p in probabilidades ]
     fig, ax = plt.subplots(figsize=(10, 10))
-    patches = ax.pie(sizes, autopct='%1.1f%%', startangle=90, shadow=True, explode=explode)
+    patches = ax.pie(sizes, autopct='%1.1f%%', startangle=90, shadow=True, explode=explode, colors=colors)
     ax.legend(labels=labels, loc="best")
     # plt.axis('equal')
     fig.tight_layout()
