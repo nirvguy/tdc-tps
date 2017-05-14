@@ -1,16 +1,43 @@
-\subsection{Fuentes de informacion usadas}
 
-Para el presente TP modelamos dos fuentes que puedan generarnos la informaci\'on que queremos analizar. En \textit{fuente.py} definimos una clase que nos sirva para poder modelar las distintas fuentes que necesitamos, adem\'as de poder tener m\'etodos que nos den informaci\'on valiosa como la entrop\'ia. En \textit{analyse-data.py} definimos dos funciones que se encargan de agregar los simbolos para cada una de las fuentes, en base a los paquetes que se reciben. Analizaremos en detalle este proceso viendo cada una de las fuentes a continuaci\'on.
+\subsection{Informacion y Entropia}
 
-\subsubsection{Fuente unicast-multicast}
+Siguiendo con lo dicho en la introducción podemos identificar de acuerdo a lo publicado en \textit{A Mathematical Theory of Communication} ciertos elementos comunes a toda comunicación. Pricipalmente contaremos con un \textit{Emisor} el cual transmite una \textit{Fuente de información} por medio de un canal asediado por una \textit{Fuente de ruido} que impacta durante su trayecto a la señal mas tarde recibida por un \textit{Receptor}. De acuerdo a Claude E. Shannon, si conocemos el proceso aleatorio que genera el ruido, es posible recuperar la información transmitida asumiendo que dicha perturbación se comporta como un proceso gaussiano con una varianza conocida, usualmente al que se asocia a la noción de ruido blanco. A este esquema se lo puede expresar ilustrativamente de la siguiente forma:
 
-Como dice el nombre, esta fuente nos servir\'a para poder comparar los paquetes unicast contra los multicast. Para esto, miraremos la mac de destino de cada paquete. Sabemos que si la mac es \textit{ff:ff:ff:ff:ff:ff} nos indica que su destino es multicast y caso contrario, es decir, que tenga una mac valida como destino, significa que esta dirigido a un \'unico dispositivo y por lo tanto es unicast.
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.6\columnwidth]{graficos/EsquemaShannon.png}
+\caption{Diagrama de comunicación}
+\end{center}
+\end{figure}
 
-En \textit{analyse-data.py} definimos la funci\'on \textit{analize\_uni\_multi\_cast} que realiza lo que ya describimos tomando como entrada un paquete y en base a su destino, generando el simbolo correspondiente que sera unicast o multicast.
 
+A la hora de entablar una comunicación es necesario que las partes involucradas se pongan de acuerdo sobre un leguaje en comun con el que van a desarrollar el "`dialogo"' a lo largo del tiempo. Para poder llevar esto a cabo es que se necesita definir un conjunto de simbolos $S = \{ s_1, ..., s_n \}$ que aporten semantica a lo que se tratando de transmitir. De acuerdo al analisis de Shannon cada uno de estos simbolos tiene asociada una cantidad de información que responde a la formula $I(s_i) = log(\frac{1}{p(s_i)})$, donde $I(s_i)$ es la información asociada a $s_i$ para cada $i$ con $1 \leq i \leq n$. Algo importante a notar para enteder esta formula es que la información de un simbolo estará intimamente relacionada con su probabilidad, a modo coloquialpodemos pensar que en cuanto mas probable sea un simbolo, mas esperable será su aparición, y por lo tanto mas predecible. En constraste aquellas apariciones de simbolos poco probables son conciderados un evento desentonante con respecto a mucho mas usuales, por lo que se les da mas valor semantico. En base a ello podemos observar que dicha definición cumple con ciertas condiciones naturales para el calculo de de la infomación:
 
-\subsubsection{Fuente ARP}
+\begin{itemize}
+	\item Si $p(s_i) = 1$ para algun $i$, entonces $I(s_i) = 0$, ya que un evento que ocurre siempre no aporta información significativa
+	\item Si $s \in S$, entonces $I(s) \geq 0$. Esto vale ya que la inversa de la probabilidad es siempre mayor o igual a 1
+	\item $I(s_i, s_j) \leq I(s_i) + I(s_j)$, la igualdad vale unicamente si los símbolos son independientes
+	
+\end{itemize}
 
-En esta fuente solo nos interesar\'an los paquetes ARP para poder analizar que sucede en ellos. Por lo tanto, todos los paquetes que no sean ARP no generar\'an ning\'un simbolo en esta fuente. Una vez realizado este filtro, generaremos un simbolo que ser\'a el destino que tenga el paquete.
+Ademas nos interesará otra noción importante, la de \textit{Entropía}. Esta refleja la media de la información obtenida de una fuente de información en base a la probabilidad e información que provee cada simbolo en la comunicación. Se denota como $H(S)$ (siendo $S$ la fuente de información), y se define de la siguiente manera $H(S) = \sum\limits_{i=1}^n p(s_i)I(s_i)$. Observar que en cuanto mas equiprovable son los simbolos de la fuente, mayor será la \textit{Entropía}, y por el contrario disminuida para aquellas fuentes en las que la distribucion de probabilidades sea muy desigual. Esta noción será importante para el analisis de la posterior experimentación.
 
-En \textit{analyse-data.py} definimos la funci\'on \textit{analize\_arp} que realiza lo mencionado. Notemos que adem\'as esta funci\'on es utilizada para otro proposito que es generar el grafo de topolog\'ia de la red agregando un eje entre el nodo que representa el dispositivo que envi\'o el paquete y el nodo que representa el que recibi\'o el paquete.
+\subsection{Paquetes de red}
+
+En las redes de comunicacion informaticas, la informacion se mueve a traves de ellas en forma de paquetes. Dichos paquetes cuentan con varios campos (se agregan a medida que los paquetes viajan por el stack TCP/IP), en este trabajo nos interesaremos en los paquetes de tipo $Ethernet$ e $IP$. En el caso de $Ethernet$, los campos son:
+
+\begin{enumerate}
+	\item MAC orgen
+	\item MAC destino
+	\item Protocolo del payload, es decir, que tipo de paquete de capa 3 esta transportando
+\end{enumerate}
+
+Mientras que en los paquetes ARP de capa 3 nos interesan los campos:
+
+\begin{enumerate}
+	\item Tipo de operación
+	\item MAC de origen
+	\item IP de origen
+	\item MAC de destino
+	\item IP de destino
+\end{enumerate}
