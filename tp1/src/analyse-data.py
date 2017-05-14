@@ -16,7 +16,7 @@ grafo = Grafo()
 
 def analize_uni_multi_cast(packet):
     # Si no es Ethernet o 802.11 descartarlo
-    if Ether not in packet or Dot11 not in packet:
+    if (Ether not in packet) and (Dot11 not in packet):
         return
 
     # Si es ethernet
@@ -32,7 +32,7 @@ def analize_uni_multi_cast(packet):
 
 def analize_arp(packet):
     # Si no es Ethernet o 802.11 descartarlo
-    if Ether not in packet or Dot11 not in packet:
+    if (Ether not in packet) and (Dot11 not in packet):
         return
     # Si no es ARP se descarta
     if ARP not in packet:
