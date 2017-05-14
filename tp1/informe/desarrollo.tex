@@ -1,1 +1,16 @@
-% TODO: Desarrollo
+\subsection{Fuentes de informacion usadas}
+
+Para el presente TP modelamos dos fuentes que puedan generarnos la informaci\'on que queremos analizar. En \textit{fuente.py} definimos una clase que nos sirva para poder modelar las distintas fuentes que necesitamos, adem\'as de poder tener m\'etodos que nos den informaci\'on valiosa como la entrop\'ia. En \textit{analyse-data.py} definimos dos funciones que se encargan de agregar los simbolos para cada una de las fuentes, en base a los paquetes que se reciben. Analizaremos en detalle este proceso viendo cada una de las fuentes a continuaci\'on.
+
+\subsubsection{Fuente unicast-multicast}
+
+Como dice el nombre, esta fuente nos servir\'a para poder comparar los paquetes unicast contra los multicast. Para esto, miraremos la mac de destino de cada paquete. Sabemos que si la mac es \textit{ff:ff:ff:ff:ff:ff} nos indica que su destino es multicast y caso contrario, es decir, que tenga una mac valida como destino, significa que esta dirigido a un \'unico dispositivo y por lo tanto es unicast.
+
+En \textit{analyse-data.py} definimos la funci\'on \textit{analize\_uni\_multi\_cast} que realiza lo que ya describimos tomando como entrada un paquete y en base a su destino, generando el simbolo correspondiente que sera unicast o multicast.
+
+
+\subsubsection{Fuente ARP}
+
+En esta fuente solo nos interesar\'an los paquetes ARP para poder analizar que sucede en ellos. Por lo tanto, todos los paquetes que no sean ARP no generar\'an ning\'un simbolo en esta fuente. Una vez realizado este filtro, generaremos un simbolo que ser\'a el destino que tenga el paquete.
+
+En \textit{analyse-data.py} definimos la funci\'on \textit{analize\_arp} que realiza lo mencionado. Notemos que adem\'as esta funci\'on es utilizada para otro proposito que es generar el grafo de topolog\'ia de la red agregando un eje entre el nodo que representa el dispositivo que envi\'o el paquete y el nodo que representa el que recibi\'o el paquete.
