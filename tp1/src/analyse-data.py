@@ -15,16 +15,36 @@ fuente = Fuente()
 grafo = Grafo()
 
 def analize_uni_multi_cast(packet):
-    if packet.dst == MAC_MULTICAST:
+    # Si no es Ethernet o 802.11 descartarlo
+    if Ether not in packet or Dot11 not in packet:
+        return
+
+    # Si es ethernet
+    if Ether in packet:
+        dst = packet.dst
+    else: # Si es 802.11 el 
+        dst = packet.addr1
+
+    if dst == MAC_MULTICAST:
         fuente.agregar_muestra(MULTICAST)
     else:
         fuente.agregar_muestra(UNICAST)
 
 def analize_arp(packet):
+    # Si no es Ethernet o 802.11 descartarlo
+    if Ether not in packet or Dot11 not in packet:
+        return
+    # Si no es ARP se descarta
     if ARP not in packet:
         return
+
     fuente.agregar_muestra(packet.pdst)
-    p_src, p_dest = packet.src, packet.dst
+
+    if Ether in packet:
+        p_src, p_dest = packet.src, packet.dst
+    else:
+        p_src, p_dest = packet.addr2, packet.addr1
+
     grafo.agregar_nodo(p_src)
     grafo.agregar_nodo(p_dest)
     grafo.agregar_arista(p_src, p_dest)
@@ -69,7 +89,7 @@ def main():
         print_dict(result['probabilities'])
         print("Informacion: ")
         print_dict(result['information'])
-        print("Entropía: ",result['entropy'])
+        print("Entropia: ",result['entropy'])
 
 
 if __name__ == '__main__':
