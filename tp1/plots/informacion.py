@@ -4,10 +4,12 @@ import sys
 import json
 import matplotlib.pyplot as plt
 import operator
+import math
 
 def plot(information, entropy):
     fig, ax = plt.subplots()
     n = len(information)
+    max_entropy = math.log2(n)
     ind = range(n)
     if n > 30:
         max_label = 1
@@ -17,8 +19,11 @@ def plot(information, entropy):
     bar_width = 0.3
     information = list(map(lambda x: x[1], information))
     ax.bar(ind, information, bar_width)
+    size_x = ax.get_xlim()[1] # size in pixels
     ax.axhline(y=entropy, color='orange')
     ax.text(0.5, entropy + 0.1, 'Entropía', color='orange', fontsize=20)
+    ax.axhline(y=max_entropy, color='red')
+    ax.text(size_x/2.0, max_entropy + 0.1, 'Entropía max.', color='red', fontsize=20)
     ax.set_xticks(ind)
     ax.set_ylabel('Información')
     ax.set_xticklabels(labels, rotation=90)
