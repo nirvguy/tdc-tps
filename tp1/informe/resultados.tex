@@ -54,7 +54,7 @@ En este caso se analizó una red de pequeña escala con 2 notebooks encendidas,
  Lo siguiente corresponde a la experimentación realizada para la fuente
  Unicast-Multicast en una red WiFi domestica.
  
-\begin{figure}
+\begin{figure}[hp!]
 	\begin{minipage}[b]{0.9\linewidth}
 		\subfloat[Probabilidades de los simbolos de la fuente $S_1$ para la red de hogareña]{
 		 \includegraphics[width=0.45\linewidth]{../plots/mauro_s1_probabilidades.png}
@@ -78,9 +78,10 @@ dispositivo (y no todos los \textit{unicast} transmitidos en la red). Por el
 contrario los \textit{multicast} enviados por cualquier dispositivo de la red
 se pudieron seguir escuchando sin ningún tipo de censura.
 
+\clearpage
 \subsubsection{Fuente ARP}
 
-\begin{figure}
+\begin{figure}[hp!]
 	\begin{minipage}[b]{0.9\linewidth}
 		\subfloat[Probabilidades de los simbolos de la fuente $S_2$ para la red de hogareña]{
 		 \includegraphics[width=0.45\linewidth]{../plots/mauro_s2_probabilidades.png}
@@ -96,9 +97,11 @@ a la notebook en la cual se corrio este experimento y no al router. La misma con
 la mitad de los paquetes ARP de esta red y alcanza 1 de informacion.
 
 \subsubsection{Topolog\'ia de la Red}
-\begin{center}
- \includegraphics[scale=0.6]{../plots/mauro_s2_topologia.png}
-\end{center}
+\begin{figure}[hp!]
+	\begin{center}
+	 \includegraphics[scale=0.6]{../plots/mauro_s2_topologia.png}
+	\end{center}
+\end{figure}
 
 Tiene una topolog\'ia estrella como es com\'un en una red domestica. El nodo de mas a la izquierda y
 arriba tiene la rareza de que nunca envio un who has, pero si respondio is at a dos nodos de la red.
@@ -112,9 +115,11 @@ conecta todas las PCs de esta. La captura que se tomó fue de una hora para
 poder obtener estadísticamente suficiente precision en las medidas y que estas
 no sean alteradas por posibles `outliers`.
 
+\clearpage
+
 \subsubsection{Fuente Unicast-Multicast}
 
-\begin{figure}
+\begin{figure}[hp!]
 	\begin{minipage}[b]{0.9\linewidth}
 		\subfloat[Probabilidades de los simbolos de la fuente $S_1$ para la red de oficinas]{
 		 \includegraphics[width=0.45\linewidth]{../plots/trabajo_s1_probabilidades.png}
@@ -133,11 +138,9 @@ paquetes fue unicast.  El sentido de esto puede deberse a que los únicos
 protocolos que usan el tipo de mensajes broadcast son protocolos de control y
 representan una pequeña proporción del trafico total de la red.
 
-\clearpage
-
 \subsubsection{Fuente ARP}
 
-\begin{figure}
+\begin{figure}[hp!]
 	\begin{minipage}[b]{0.9\linewidth}
 		\subfloat[Probabilidades de los simbolos de la fuente $S_2$ para la red de oficinas]{
 		 \includegraphics[width=0.45\linewidth]{../plots/trabajo_s2_probabilidades.png}
@@ -156,9 +159,11 @@ es $4.85$ y por tanto $\eta_{C} = 0.41$
 
 \clearpage
 \subsubsection{Topolog\'ia de la Red}
-\begin{center}
- \includegraphics[scale=0.6]{../plots/trabajo_s2_topologia.png}
-\end{center}
+\begin{figure}[hp!]
+	\begin{center}
+	 \includegraphics[scale=0.6]{../plots/trabajo_s2_topologia.png}
+	\end{center}
+\end{figure}
 
 Se puede observar que la topología de mensajes arp es de tipo estrella
 y que el grafo es conexo. El nodo del centro resulta ser la MAC $ff:ff:ff:ff:ff:ff$
@@ -177,7 +182,7 @@ Se utilizo la red wifi con el nombre Laboratorios DC.
 
 \subsubsection{Fuente Unicast-Multicast}
 
-\begin{figure}
+\begin{figure}[hp!]
 	\begin{minipage}[b]{0.9\linewidth}
 		\subfloat[Probabilidades de los simbolos de la fuente $S_1$ para la red de laboratorios]{
 		 \includegraphics[width=0.45\linewidth]{../plots/labos_s1_probabilidades.png}
@@ -195,7 +200,7 @@ informacion de 0.27 y la entropia de la fuente de 0.66.
 
 \subsubsection{Fuente ARP}
 
-\begin{figure}
+\begin{figure}[hp!]
 	\begin{minipage}[b]{0.9\linewidth}
 		\subfloat[Probabilidades de los simbolos de la fuente $S_2$ para la red de laboratorios]{
 		 \includegraphics[width=0.45\linewidth]{../plots/labos_s2_probabilidades.png}
@@ -215,10 +220,24 @@ En cuanto a la entropia, vemos que es de 6.619, el maximo de 8.484 y la comprens
 de 0.220.
 
 \subsubsection{Topolog\'ia de la Red}
-\begin{center}
- \includegraphics[scale=0.6]{../plots/labos_s2_topologia.png}
-\end{center}
-\begin{figure}
+
+\begin{figure}[hp!]
+	\begin{center}
+	 \includegraphics[scale=0.6]{../plots/labos_s2_topologia.png}
+	\end{center}
+\end{figure}
+
+Como vemos, es nuevamente del tipo estrella la topologia como es esperada. Notamos una densidad
+distinta de nodos en varias regiones que se pueden observar. Creemos que esto se puede deber
+a la disposicion de cada laboratorio y los distintos routers o access-points que estan ubicados en la zona.
+Otra observacion es que se pueden ver dos nodos arriba a la derecha de la red que no son conexos al resto del grafo.
+
+
+\clearpage
+
+\subsection{Comentarios generales}
+
+\begin{figure}[hp!]
 	\centering
 	\begin{tabular}{|c|c|c|c|c|}
 		\hline
@@ -233,14 +252,6 @@ de 0.220.
 	\end{tabular}
 	\caption[fig:tabla]{Entropía vs Max Entropía de las fuentes $S_2$ de las redes}
 \end{figure}
-
-Como vemos, es nuevamente del tipo estrella la topologia como es esperada. Notamos una densidad
-distinta de nodos en varias regiones que se pueden observar. Creemos que esto se puede deber
-a la disposicion de cada laboratorio y los distintos routers o access-points que estan ubicados en la zona.
-Otra observacion es que se pueden ver dos nodos arriba a la derecha de la red que no son conexos al resto del grafo.
-
-
-\subsection{Comentarios generales}
 
 En la figura \label{fig:tabla} se pueden ver que las redes wifi son menos compresibles ($\eta_{C}=0.276$ y $\eta_{C}=0.220$)
 con respecto a la cableado ($\eta_{C}=0.428$) se puede ver en la tabla que se
