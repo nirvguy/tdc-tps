@@ -36,11 +36,14 @@ En cada experimentación se generaron tres tipos de resultados/graficos.
 
 \subsubsection{Fuente Unicast-Multicast}
 
+ Lo siguiente corresponde a la experimentacion realizada para la fuente Unicast-Multicast en una red WiFi domestica.
+ 
 \hspace*{-1.5cm}
  \includegraphics[scale=0.6]{../plots/mauro_s1_informacion.png}
  \includegraphics[scale=0.4]{../plots/mauro_s1_probabilidades.png}
 
-Como podemos ver 
+ Como podemos ver los resultados obtenidos muestran una alta concentración de paquetes \textit{multicast} por sobre los \textit{unicast}. En concecuencia la entropía cae abruptamente, ya que como explicamos ésta se maximiza cuando la distribución de las probabilidades de cada símbolo es equitativa, y baja a medida que nos alejamos de ello. Nuestra primera impresion era que los paquetes \textit{unicast} iban a predominar en la captura, sin embargo esto no sucedió. Es posible que esto se deba a que la placa de red del dispositivo en el cual se tomó la muestra no hayan entrado en modo promiscuo, en consecuencia el \textit{sniffer} solo llego a capturar los paquetes cuyo destino era dicho dispositivo (y no todos los \textit{unicast} transmitidos en la red). Por el contrario los \textit{multicast} enviados por cualquier dispositivo de la red se pudieron seguir escuchando sin ningun tipo de censura.
+ 
 \subsubsection{Fuente ARP}
 
 \hspace*{-1.5cm}
