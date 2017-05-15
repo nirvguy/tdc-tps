@@ -78,19 +78,78 @@ alteradas por posibles `outliers`.
 \begin{figure}
 \centering
  \includegraphics[scale=0.4]{../plots/trabajo_s1_probabilidades.png}
+ \caption{Probabilidades de los simbolos de la fuente $S_1$ para la red de oficinas}
+\end{figure}
+
+\begin{figure}
+ \centering
+ \includegraphics[scale=0.6]{../plots/trabajo_s1_informacion.png}
+ \caption{Información de los simbolos de la fuente $S_1$ para la red de oficinas}
+\end{figure}
+
+
+Como se puede observar en ambos graficos el el simbolo 
+destacado es el \textbf{unicast}, ya que este tiene mayor probabilidad
+y menor cantidad de información. Esto nos dice que aproximadamente
+sobre el cable el $81.91\%$ los paquetes fue unicast.
+El sentido de esto puede deberse a que los únicos protocolos que
+usan el tipo de mensajes broadcast son protocolos de control y representan
+una pequeña proporcion del trafico total de la red.
+
+\clearpage
 
 \subsubsection{Fuente ARP}
 
-\hspace*{-1.5cm}
- \includegraphics[scale=0.6]{../plots/trabajo_s2_informacion.png}
+\begin{figure}
+\centering
  \includegraphics[scale=0.4]{../plots/trabajo_s2_probabilidades.png}
+ \caption{Probabilidades de los simbolos de la fuente $S_2$ para la red de oficinas}
+\end{figure}
 
+\begin{figure}
+ \centering
+ \includegraphics[scale=0.6]{../plots/trabajo_s2_informacion.png}
+ \caption{Información de los simbolos de la fuente $S_2$ para la red de oficinas}
+\end{figure}
 
+En estos graficos se puede ver que efectivamente que el nodo \textbf{192.168.0.1}
+es el destacado. Por previo conocimiento de la red se sabe que este
+es el router lo cual refuerza nuestra hipotesis sobre los nodos destacados.
+Tambien se observa que la entropía alcanzada es de $2.87$ cuando la máxima
+es $4.85$ y por tanto $\eta_{C} = 0.41$
+
+\clearpage
 \subsubsection{Topolog\'ia de la Red}
 \begin{center}
  \includegraphics[scale=0.6]{../plots/trabajo_s2_topologia.png}
 \end{center}
 
+Se puede observar que la topogia de mensajes arp es de tipo estrella
+y que el grafo es conexo. El nodo del centro resulta ser la MAC $ff:ff:ff:ff:ff:ff$
+es decir los mensajes broadcast. Se puede ver que hay pocos nodos que le hayan
+enviado un paquete arp a otro que no sea el broadcast. Esto se debe
+a que al estar detrás de un switch, los mensajes unicast de respuesta (\textit{is-at})
+no son forwardeados a la maquina que realizá la captura aun estando en modo promiscuo
+la interfaz salvo que se trate de un mensaje unicast que responde la misma maquina que
+hace la captura. Aun asi se filtran mensajes unicast de pc's a otras pc's. Esto como
+se dijo puede deberse a switchs que no aprendieron bien la tabla de forwardeo.
+
 \subsection{Experimento Tavo}
 
-Arreglar cosas
+\subsubsection{Fuente Unicast-Multicast}
+
+\hspace*{-1.5cm}
+ \includegraphics[scale=0.6]{../plots/labos_s1informacion.png}
+ \includegraphics[scale=0.4]{../plots/labos_s1_probabilidades.png}
+
+\subsubsection{Fuente ARP}
+
+\hspace*{-1.5cm}
+ \includegraphics[scale=0.6]{../plots/labos_s2_informacion.png}
+ \includegraphics[scale=0.4]{../plots/labos_s2_probabilidades.png}
+
+\subsubsection{Topolog\'ia de la Red}
+\begin{center}
+ \includegraphics[scale=0.6]{../plots/labos_s2_topologia.png}
+\end{center}
+
