@@ -20,7 +20,46 @@ A la hora de entablar una comunicación es necesario que las partes involucradas
 	
 \end{itemize}
 
-Ademas nos interesará otra noción importante, la de \textit{Entropía}. Esta refleja la media de la información obtenida de una fuente de información en base a la probabilidad e información que provee cada simbolo en la comunicación. Se denota como $H(S)$ (siendo $S$ la fuente de información), y se define de la siguiente manera $H(S) = \sum\limits_{i=1}^n p(s_i)I(s_i)$. Observar que en cuanto mas equiprovable son los simbolos de la fuente, mayor será la \textit{Entropía}, y por el contrario disminuida para aquellas fuentes en las que la distribucion de probabilidades sea muy desigual. Esta noción será importante para el analisis de la posterior experimentación.
+Ademas nos interesará otra noción importante, la de \textit{Entropía} y \textit{Compresibilidad}. La
+primera refleja el promedio de la información obtenida de una fuente en
+base a las probabilidad de ocurrencia e información que provee cada simbolo en la
+comunicación, o, de otra manera, el nivel de desorden de la comunicación.
+Se denota como $H(S)$ (siendo $S$ la fuente de información), y se
+define de la siguiente manera 
+\begin{equation}
+	H(S) = \sum\limits_{i=1}^n p(s_i)I(s_i)
+\end{equation}
+
+Por ejemplo, al ser todos los simbolos, igualmente probables,
+la entropía será máxima alcanzando el valor de $log_2(\lvert simbolos\rvert)$.
+De esta ultima observación se desprende, de forma general, que cuanto mayor sea el grado de
+"equiprobabilidad" de los simbolos de la fuente, mayor será la
+\textit{Entropía}, no superando al máximo posible (en el caso equiprobable).
+Por el contrario sera mucho menor para aquellas fuentes en las
+que la distribucion de probabilidades sea muy desigual (siempre por encima de cero).
+Esto será de vital importancia para los analisis posteriores.
+\\
+
+La longitud promedio de un código es $L(C) = \sum_{s \in S} P(s)l(C(s))$ donde
+$l(C(s))$ es la largo de la codificación de S.
+\\
+
+Otra noción que se introduce en este trabajo es la de \textit{Compresibilidad}
+Definimos este nivel como
+\begin{equation}
+\eta_{C}(S)=1-\frac{H(S)}{H_{max}(S)}
+\end{equation}donde $H(S)$ es la entropía de la
+fuente y $H_{max}(S)$ la entropía máxima. Cuando $H(S) = H_{max}(S)$ decimos que
+la fuente no es muy compresible debido a que la unica forma optima e instantanea
+de codificar los simbolos es que todos tengan la misma longitud. Por otro lado
+si $H(S) << H_{max}(S)$ y asignamos a simbolos más frecuentes
+una longitud mas chica que al resto esto permitirá que la longitud promedio
+sea menor y por tanto, la longitud promedio de los códigos que se transmitan
+mucho mas bajos.
+Es por eso que esta formula intenta representar el grado de compresión de la fuente.
+Cuanto mas cercano este coeficiente es a cero o uno sera posible comprimir menos
+o mas la fuente respectivamente.
+
 
 \subsection{Paquetes de red}
 
