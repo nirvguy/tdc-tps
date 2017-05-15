@@ -46,10 +46,14 @@ En cada experimentación se generaron tres tipos de resultados/gráficos.
 
 \subsection{Red hogareña}
 
+En este caso se analizó una red de pequeña escala con 2 notebooks encendidas,
+2 celulares y un router.
+
 \subsubsection{Fuente Unicast-Multicast}
 
- Lo siguiente corresponde a la experimentación realizada para la fuente Unicast-Multicast en una red WiFi domestica.
-
+ Lo siguiente corresponde a la experimentación realizada para la fuente
+ Unicast-Multicast en una red WiFi domestica.
+ 
 \begin{figure}
 	\begin{minipage}[b]{0.9\linewidth}
 		\subfloat[Probabilidades de los simbolos de la fuente $S_1$ para la red de hogareña]{
@@ -99,7 +103,7 @@ la mitad de los paquetes ARP de esta red y alcanza 1 de informacion.
 Tiene una topolog\'ia estrella como es com\'un en una red domestica. El nodo de mas a la izquierda y
 arriba tiene la rareza de que nunca envio un who has, pero si respondio is at a dos nodos de la red.
 
-\subsection{\emph{Red del Trabajo}}
+\subsection{\emph{Red de Oficinas}}
 
 En esta caso se analizo una red cableada de mediana escala, que consta de 6
 oficinas con varias computadoras de escritorio (Desktop) totalizando una
@@ -161,9 +165,9 @@ y que el grafo es conexo. El nodo del centro resulta ser la MAC $ff:ff:ff:ff:ff:
 es decir los mensajes broadcast. Se puede ver que hay pocos nodos que le hayan
 enviado un paquete arp a otro que no sea el broadcast. Esto se debe
 a que al estar detrás de un switch, los mensajes unicast de respuesta (\textit{is-at})
-no son forwardeados a la maquina que realiza la captura aun estando en modo promiscuo
-la interfaz salvo que se trate de un mensaje unicast que responde la misma maquina que
-hace la captura. Aun asi se filtran mensajes unicast de pc's a otras pc's. Esto como
+no son forwardeados a la interfaz de la maquina que realiza la captura aun estando en modo promiscuo
+.En cambio cuando se trate de un mensaje unicast que responde el mismo dispositivo que
+realiza la captura este si es registrado. Aun asi se filtran mensajes unicast de pc's a otras pc's. Esto como
 se dijo puede deberse a switchs que no aprendieron bien la tabla de forwardeo.
 
 \subsection{Red de Laboratorios del DC}
