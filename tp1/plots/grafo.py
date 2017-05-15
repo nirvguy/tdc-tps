@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
  
 
 def plot(graph):
-    G = nx.Graph()
+    G = nx.DiGraph()
     G.add_nodes_from(graph['nodes'])
     for u, v, c in graph['edges']:
         G.add_edge(u, v, cost=str(c)) 
