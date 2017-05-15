@@ -23,7 +23,7 @@ def main():
             entropia = data['entropy']
             n = len(data['information'])
             entropia_max = math.log2(n)
-            eta_c = (entropia_max-entropia)/entropia
+            eta_c = (entropia_max-entropia)/entropia_max
             print('{} & {:2.3f} & {:2.3f} & {:1.3f} \\\\'.format(filename, entropia,entropia_max,eta_c))
             print("\\hline")
 
