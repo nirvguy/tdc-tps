@@ -1,6 +1,15 @@
 En esta secci\'on, presentaremos los resultados obtenidos en los experimentos
 utilizando lo definido en la secci\'on de desarrollo.
 
+Se buscaron analizar en cada fuente tres tipos de redes segun su escala, es
+decir redes pequeña, mediana y gran escala. Estas redes fueron
+una hogareña, de unas oficinas, de un laboratorio de una Universidad.
+
+En cada captura se almaceno todo los paquetes que se transmitieron
+por la red con el sniffer desarollado como se menciono
+previamente. Luego analizados automaticamente por el otro programa `analy\_data`
+para producir los graficos que se presentan a continuación.
+
 \subsection{Nodos distinguidos}
 
 En cada experimento se analizaron las dos fuentes de información y se definió
@@ -55,12 +64,19 @@ En cada experimentación se generaron tres tipos de resultados/graficos.
  \includegraphics[scale=0.6]{../plots/mauro_s2_topologia.png}
 \end{center}
 
-\subsection{Experimento Chino}
+\subsection{\emph{Red del Trabajo}}
+
+En esta caso se analizo una red cableada de mediana escala, 
+que consta de 6 oficinas con varias computadoras de escritorio (Desktop) totalizando
+una cantidad de 29 estaciones. Además en cada oficina se encuentra un switch que conecta todas
+las PCs de esta. La captura que se tomó fue de una hora para 
+poder obtener estadísticamente suficiente precision en las medidas y que estas no sean
+alteradas por posibles `outliers`.
 
 \subsubsection{Fuente Unicast-Multicast}
 
-\hspace*{-1.5cm}
- \includegraphics[scale=0.6]{../plots/trabajo_s1_informacion.png}
+\begin{figure}
+\centering
  \includegraphics[scale=0.4]{../plots/trabajo_s1_probabilidades.png}
 
 \subsubsection{Fuente ARP}
