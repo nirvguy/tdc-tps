@@ -60,6 +60,21 @@ Es por eso que esta formula intenta representar el grado de compresión de la fu
 Cuanto mas cercano este coeficiente es a cero o uno sera posible comprimir menos
 o mas la fuente respectivamente.
 
+\subsection{Protocolo ARP}
+Durante los experimentos se analizaron los paquetes ARP. Estos son paquetes
+de control de la red permiten comunicar, mediante distintos mensajes,
+que dirección \textbf{IP} le corresponde a qué dirección \textbf{MAC}. Cada dispositivo
+cuenta con una caché de estas traducciones para poder efectivamente
+transmitir paquetes \textbf{IP} (Capa 3, en el modelo \textbf{OSI}) por la red enbebidos
+en paquetes \textbf{MAC} (Capa 2, en el modelo \textbf{OSI}). Para esto existen
+dos tipos de operaciones, \textit{who-has} e \textit{is-at}. Cuando un nodo A
+de la red desea conocer cual es dispositivo B que tiene cierta \textbf{IP} (ie. 192.168.0.1)
+este transmite un mensaje \textit{broadcast} \textit{who-has} con el campo direccion de destino:192.168.0.1.
+Al dispositivo B, con esta IP, le llega este mensaje (eventualmente le llega a todos pero solo B responde ya que es el único con esta IP)
+responde con el tipo de operacion \textit{is-at} unicast a A (puede dabido a que en el paquete está la direccion de source
+que es la \textbf{MAC} address del dispositivo A). A A, le llega esta respuesta y con eso agrega a las traducciones esta IP con la respectiva mac adress
+recibida. Las entradas de la caché cuentan con un tiempo de expiración debido a posibles cambios de IP de los dispositivos. Finalmente
+es por esto último que pasado el tiempo de expiración se vuelve a realizar este protocolo.
 
 \subsection{Paquetes de red}
 
@@ -68,13 +83,12 @@ En las redes de comunicacion informaticas, la informacion se mueve a traves de e
 \begin{enumerate}
 	\item MAC orgen
 	\item MAC destino
-	\item Protocolo del payload, es decir, que tipo de paquete de capa 3 esta transportando
 \end{enumerate}
 
 Mientras que en los paquetes ARP de capa 3 nos interesan los campos:
 
 \begin{enumerate}
-	\item Tipo de operación
+	\item Tipo de operación (estos son \emph{who-has}, \emph{is-at})
 	\item MAC de origen
 	\item IP de origen
 	\item MAC de destino
