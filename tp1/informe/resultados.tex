@@ -49,7 +49,7 @@ En cada experimentación se generaron tres tipos de resultados/gráficos.
 \subsubsection{Fuente Unicast-Multicast}
 
  Lo siguiente corresponde a la experimentación realizada para la fuente Unicast-Multicast en una red WiFi domestica.
- 
+
 \begin{figure}
 	\begin{minipage}[b]{0.9\linewidth}
 		\subfloat[Probabilidades de los simbolos de la fuente $S_1$ para la red de hogareña]{
@@ -73,7 +73,7 @@ el \textit{sniffer} solo llego a capturar los paquetes cuyo destino era dicho
 dispositivo (y no todos los \textit{unicast} transmitidos en la red). Por el
 contrario los \textit{multicast} enviados por cualquier dispositivo de la red
 se pudieron seguir escuchando sin ningún tipo de censura.
- 
+
 \subsubsection{Fuente ARP}
 
 \begin{figure}
@@ -87,10 +87,17 @@ se pudieron seguir escuchando sin ningún tipo de censura.
 	\end{minipage}
 \end{figure}
 
+Este experimento lamentablemente no dio como esperabamos. La IP 192.168.1.9, se corresponde
+a la notebook en la cual se corrio este experimento y no al router. La misma concentro aproximadamente
+la mitad de los paquetes ARP de esta red y alcanza 1 de informacion.
+
 \subsubsection{Topolog\'ia de la Red}
 \begin{center}
  \includegraphics[scale=0.6]{../plots/mauro_s2_topologia.png}
 \end{center}
+
+Tiene una topolog\'ia estrella como es com\'un en una red domestica. El nodo de mas a la izquierda y
+arriba tiene la rareza de que nunca envio un who has, pero si respondio is at a dos nodos de la red.
 
 \subsection{\emph{Red del Trabajo}}
 
@@ -159,7 +166,10 @@ la interfaz salvo que se trate de un mensaje unicast que responde la misma maqui
 hace la captura. Aun asi se filtran mensajes unicast de pc's a otras pc's. Esto como
 se dijo puede deberse a switchs que no aprendieron bien la tabla de forwardeo.
 
-\subsection{Experimento Tavo}
+\subsection{Red de Laboratorios del DC}
+
+Este experimento fue realizado en una red de gran escala a las 16:00hs durante media hora en los Laboratorios del DC.
+Se utilizo la red wifi con el nombre Laboratorios DC.
 
 \subsubsection{Fuente Unicast-Multicast}
 
@@ -174,6 +184,11 @@ se dijo puede deberse a switchs que no aprendieron bien la tabla de forwardeo.
 	\end{minipage}
 \end{figure}
 
+Como se dijo anteriormente en el caso de la Red de Oficinas, se ve que la mayor\'ia
+de los paquetes son unicast porque los paquetes broadcast son usados generalmente
+por los protocolos de control. Ademas, la probabilidad de unicast fue de 0.82, la
+informacion de 0.27 y la entropia de la fuente de 0.66.
+
 \subsubsection{Fuente ARP}
 
 \begin{figure}
@@ -186,6 +201,14 @@ se dijo puede deberse a switchs que no aprendieron bien la tabla de forwardeo.
 		}
 	\end{minipage}
 \end{figure}
+
+Podemos observar que en este caso el nodo destacado es de la IP 10.2.0.184 con casi el 10%.
+Averiguamos a que dispositivo corresponde y es la impresora, lo que nos hace pensar que
+por el horario se estaba usando mucho para imprimir, aunque tambien podria ser
+que su tabla ARP tiene una cache con poco tiempo de vida para cada elemento.
+
+En cuanto a la entropia, vemos que es de 6.619, el maximo de 8.484 y la comprensibilidad es
+de 0.220.
 
 \subsubsection{Topolog\'ia de la Red}
 \begin{center}
@@ -206,6 +229,13 @@ se dijo puede deberse a switchs que no aprendieron bien la tabla de forwardeo.
 	\end{tabular}
 	\caption[fig:tabla]{Entropía vs Max Entropía de las fuentes $S_2$ de las redes}
 \end{figure}
+
+Como vemos, es nuevamente del tipo estrella la topologia como es esperada. Notamos una densidad
+distinta de nodos en varias regiones que se pueden observar. Creemos que esto se puede deber
+a la disposicion de cada laboratorio y los distintos routers o access-points que estan ubicados en la zona.
+
+
+\subsection{Comentarios generales}
 
 En la figura \label{fig:tabla} se pueden ver que las redes wifi son menos compresibles ($\eta_{C}=0.276$ y $\eta_{C}=0.220$)
 con respecto a la cableado ($\eta_{C}=0.428$) se puede ver en la tabla que se
