@@ -9,7 +9,6 @@ from grafo import Grafo
 UNICAST = 'unicast'
 MULTICAST = 'multicast'
 MAC_MULTICAST = 'ff:ff:ff:ff:ff:ff'
-TIMEOUT_DEFAULT = 60 * 10
 
 fuente = Fuente()
 grafo = Grafo()
@@ -50,11 +49,11 @@ def analize_arp(packet):
     grafo.agregar_arista(p_src, p_dest)
 
 def main():
-    parser = argparse.ArgumentParser(description='Modelado de fuente unicast/broadcast')
-    parser.add_argument('captura', type=str, help='Captura')
-    parser.add_argument('-s', "--source", type=str, choices=('u_m', 'arp'), default='u_m')
-    parser.add_argument('-j', "--use-json", dest='use_json', action='store_true')
-    parser.add_argument("--no-use-json", dest='use_json', action='store_false')
+    parser = argparse.ArgumentParser(description='Modelado de fuente unicast/broadcast o de la fuente arp')
+    parser.add_argument('captura', type=str, help='Archivo .pcap resultado de correr el sniffer')
+    parser.add_argument('-s', "--source", type=str, choices=('u_m', 'arp'), default='u_m', help="Fuente de información, por defecto unicast/multicast")
+    parser.add_argument('-j', "--use-json", dest='use_json', action='store_true', help="Establece la salida en formato json")
+    parser.add_argument("--no-use-json", dest='use_json', action='store_false', help="No imprime la salida en formato json. Por defecto.")
     parser.set_defaults(use_json=False)
     args = parser.parse_args()
 
