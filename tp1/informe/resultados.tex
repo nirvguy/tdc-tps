@@ -5,8 +5,9 @@ Se buscaron analizar en cada fuente tres tipos de redes segun su escala, es
 decir redes pequeña, mediana y gran escala. Estas redes fueron
 una hogareña, de unas oficinas, de un laboratorio de una Universidad.
 
-En cada captura se almaceno todo los paquetes que se transmitieron por la red
-con el sniffer desarollado como se menciono previamente. Luego analizados
+En cada captura se almaceno todo los paquetes (con la placa de red
+correspondiente en modo promiscuo) que se transmitieron por la red con el
+sniffer desarollado como se menciono previamente. Luego analizados
 automaticamente por el otro programa `analy\_data` para producir los graficos
 que se presentan a continuación.
 
@@ -17,15 +18,19 @@ un criterio para distinguir un nodo de cada red. Este criterio consta en que
 será distinguido el símbolo con mas probabilidad de ocurrir o equivalentemente
 el símbolo que tenga menor información.
 
-Para la fuente $S_2$ una de las hipótesis es que estos nodos "distinguidos" son
+\subsection{Hipotesis planteadas} \label{sec:hipotesis}
+
+Las hipotesis o preguntas que se presentan en este trabajo son las siguientes:
+
+Para la fuente $S_2$ es que estos nodos \quotes{distinguidos} son
 nodos especiales como routers, access points, etc. dado que estos participan
 en la mayor parte de las comunicaciones con la red como con el exterior.
 Por lo cual esto nos daría un método (no 100\% confiable debido a casos
 atípicos) de determinar los router en una red.
 
-Otra de las hipótesis que se presenta es que una red \textit{cableada} será
-mas "compresible" que una \textit{wireless}. Para esto se mostraron el
-cociente de la $\frac{H(S)}{H_{MAX}(S)}$ como se desarrollo en TODO: CITA
+La segunda es que una red \textit{cableada} será
+mas \quotes{compresible} que una \textit{wireless}. Para esto se mostró el
+cociente de la $\frac{H_{MAX}(S)-H(S)}{H_{MAX}(S)}$ como se desarrollo en la Definicion \ref{eq:eta_c}
 y se los comparo entre el mismo tipo de fuente de los distintos experimentos.
 
 \subsection{Descripción de los Gráficos}
@@ -44,10 +49,12 @@ En cada experimentación se generaron tres tipos de resultados/gráficos.
 	nodo a otro
 \end{itemize}
 
+\clearpage
 \subsection{Red hogareña}
 
 En este caso se analizó una red de pequeña escala con 2 notebooks encendidas,
 2 celulares y un router.
+
 
 \subsubsection{Fuente Unicast-Multicast}
 
@@ -65,6 +72,7 @@ En este caso se analizó una red de pequeña escala con 2 notebooks encendidas,
 	\end{minipage}
 \end{figure}
 
+
 Como podemos ver los resultados obtenidos muestran una alta concentración de
 paquetes \textit{multicast} por sobre los \textit{unicast}. En consecuencia la
 entropía cae abruptamente, ya que como explicamos ésta se maximiza cuando la
@@ -78,7 +86,6 @@ dispositivo (y no todos los \textit{unicast} transmitidos en la red). Por el
 contrario los \textit{multicast} enviados por cualquier dispositivo de la red
 se pudieron seguir escuchando sin ningún tipo de censura.
 
-\clearpage
 \subsubsection{Fuente ARP}
 
 \begin{figure}[hp!]
@@ -92,9 +99,10 @@ se pudieron seguir escuchando sin ningún tipo de censura.
 	\end{minipage}
 \end{figure}
 
-Este experimento lamentablemente no dio como esperabamos. La IP 192.168.1.9, se corresponde
+Este experimento lamentablemente no dio como esperábamos. La IP 192.168.1.9, se corresponde
 a la notebook en la cual se corrió este experimento y no al router. La misma concentro aproximadamente
 la mitad de los paquetes ARP de esta red y alcanza 1 de información.
+
 
 \subsubsection{Topolog\'ia de la Red}
 \begin{figure}[hp!]
@@ -103,19 +111,16 @@ la mitad de los paquetes ARP de esta red y alcanza 1 de información.
 	\end{center}
 \end{figure}
 
-Tiene una topolog\'ia estrella como es común en una red domestica. El nodo de mas a la izquierda y
+Tiene una topolog\'ia estrella como es común en una red domestica. Del grafo se desprende que el nodo de mas a la izquierda y
 arriba tiene la rareza de que nunca envió un \textit{who-has}, pero si respondió \emph{is-at} a dos nodos de la red.
 
 \subsection{\emph{Red de Oficinas}}
 
 En esta caso se analizo una red cableada de mediana escala, que consta de 6
-oficinas con varias computadoras de escritorio (Desktop) totalizando una
-cantidad de 29 estaciones. Además en cada oficina se encuentra un switch que
-conecta todas las PCs de esta. La captura que se tomó fue de una hora para
-poder obtener estadísticamente suficiente precision en las medidas y que estas
-no sean alteradas por posibles `outliers`.
-
-\clearpage
+oficinas con varias computadoras de escritorio (Desktop). Además en cada
+oficina se encuentra un switch que conecta todas las PCs de esta. La captura
+que se tomó fue de una hora para poder obtener estadísticamente suficiente
+precisión en las medidas y que estas no sean alteradas por posibles `outliers`.
 
 \subsubsection{Fuente Unicast-Multicast}
 
@@ -133,8 +138,8 @@ no sean alteradas por posibles `outliers`.
 
 Como se puede observar en ambos gráficos el el símbolo destacado es el
 \textbf{unicast}, ya que este tiene mayor probabilidad y menor cantidad de
-información. Esto nos dice que aproximadamente sobre el cable el $81.91\%$ los
-paquetes fue unicast.  El sentido de esto puede deberse a que los únicos
+información. Esto nos dice que sobre el cable el $81.91\%$ los
+paquetes fueron unicast.  El sentido de esto puede deberse a que los únicos
 protocolos que usan el tipo de mensajes broadcast son protocolos de control y
 representan una pequeña proporción del trafico total de la red.
 
@@ -157,7 +162,6 @@ es el router lo cual refuerza nuestra hipótesis sobre los nodos destacados.
 También se observa que la entropía alcanzada es de $2.77$ cuando la máxima
 es $4.85$ y por tanto $\eta_{C} = 0.41$
 
-\clearpage
 \subsubsection{Topolog\'ia de la Red}
 \begin{figure}[hp!]
 	\begin{center}
@@ -165,20 +169,20 @@ es $4.85$ y por tanto $\eta_{C} = 0.41$
 	\end{center}
 \end{figure}
 
-Se puede observar que la topología de mensajes arp es de tipo estrella
-y que el grafo es conexo. El nodo del centro resulta ser la MAC $ff:ff:ff:ff:ff:ff$
-es decir los mensajes broadcast. Se puede ver que hay pocos nodos que le hayan
+Se observa que la topología de mensajes arp es de tipo estrella
+y que el grafo es conexo. El nodo del centro resulta ser la MAC ff:ff:ff:ff:ff:ff
+es decir los mensajes broadcast. Se ve que hay pocos nodos que le hayan
 enviado un paquete arp a otro que no sea el broadcast. Esto se debe
 a que al estar detrás de un switch, los mensajes unicast de respuesta (\textit{is-at})
-no son forwardeados a la interfaz de la maquina que realiza la captura aun estando en modo promiscuo
-.En cambio cuando se trate de un mensaje unicast que responde el mismo dispositivo que
-realiza la captura este si es registrado. Aun asi se filtran mensajes unicast de pc's a otras pc's. Esto como
-se dijo puede deberse a switchs que no aprendieron bien la tabla de forwardeo.
+no son forwardeados a la interfaz de la maquina que realiza la captura aun
+estando en modo promiscuo .En cambio cuando se trate de un mensaje unicast que
+responde el mismo dispositivo que realiza la captura este si es registrado. Aun
+asi se filtran mensajes unicast de pc's a otras pc's. Esto como se dijo puede
+deberse a switchs que no aprendieron bien la tabla de forwardeo.
 
 \subsection{Red de Laboratorios del DC}
 
-Este experimento fue realizado en una red de gran escala a las 16:00hs durante media hora en los Laboratorios del DC.
-Se utilizo la red wifi con el nombre Laboratorios DC.
+Este experimento fue realizado en una red de gran escala a las 16:00 hs durante media hora en los Laboratorios del DC.
 
 \subsubsection{Fuente Unicast-Multicast}
 
@@ -211,12 +215,12 @@ informacion de 0.27 y la entropia de la fuente de 0.66.
 	\end{minipage}
 \end{figure}
 
-Podemos observar que en este caso el nodo destacado es de la IP 10.2.0.184 con casi el 10%.
-Averiguamos a que dispositivo corresponde y es la impresora, lo que nos hace pensar que
-por el horario se estaba usando mucho para imprimir, aunque tambien podria ser
+Podemos observar que en este caso el nodo destacado es de la IP 10.2.0.184 con casi el 10\%.
+Investigamos a que dispositivo corresponde y resulta ser la impresora, lo que nos hace pensar que
+por el horario se estaba usando mucho para imprimir, aunque también podría ser
 que su tabla ARP tiene una cache con poco tiempo de vida para cada elemento.
 
-En cuanto a la entropia, vemos que es de 6.619, el maximo de 8.484 y la comprensibilidad es
+En cuanto a la entropía, vemos que es de 6.619, el máximo de 8.484 y la comprensibilidad es
 de 0.220.
 
 \subsubsection{Topolog\'ia de la Red}
@@ -227,13 +231,11 @@ de 0.220.
 	\end{center}
 \end{figure}
 
-Como vemos, es nuevamente del tipo estrella la topologia como es esperada. Notamos una densidad
+Como vemos, es nuevamente del tipo estrella la topología como es esperada. Notamos una densidad
 distinta de nodos en varias regiones que se pueden observar. Creemos que esto se puede deber
-a la disposicion de cada laboratorio y los distintos routers o access-points que estan ubicados en la zona.
-Otra observacion es que se pueden ver dos nodos arriba a la derecha de la red que no son conexos al resto del grafo.
+a la disposición de cada laboratorio y los distintos routers o access-points que están ubicados en la zona.
+Otra observación es que se pueden ver dos nodos arriba a la derecha de la red que no son conexos al resto del grafo.
 
-
-\clearpage
 
 \subsection{Comentarios generales}
 
@@ -250,10 +252,10 @@ Otra observacion es que se pueden ver dos nodos arriba a la derecha de la red qu
 		Laboratorios & Wifi & 6.619 & 8.484 & 0.220 \\
 		\hline
 	\end{tabular}
-	\caption[fig:tabla]{Entropía vs Max Entropía de las fuentes $S_2$ de las redes}
+	\caption{Entropía vs Max Entropía de las fuentes $S_2$ de las redes}
+	\label{fig:tabla}
 \end{figure}
 
-En la figura \label{fig:tabla} se pueden ver que las redes wifi son menos compresibles ($\eta_{C}=0.276$ y $\eta_{C}=0.220$)
-con respecto a la cableado ($\eta_{C}=0.428$) se puede ver en la tabla que se
-reafirma nuestra hipotesis de que las redes cabledas son más compresibles que
+En la figura \ref{fig:tabla} se pueden ver que las redes wifi son menos compresibles ($\eta_{C}=0.276$ y $\eta_{C}=0.220$)
+con respecto a la cableado ($\eta_{C}=0.428$). Esto reafirma nuestra hipótesis (ver Sección \ref{sec:hipotesis}) de que las redes cabledas son más compresibles que
 las redes wifi.

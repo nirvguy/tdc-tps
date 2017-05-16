@@ -1,20 +1,49 @@
 \subsection{Sniffer con Scapy}
 
-Para el an\'alisis de las distintintas redes, realizamos un sniffer utilizando la libreria Scapy en Python 3. La misma utiliza las funciones definidas para poder observar los paquetes que llegan y cada paquete lo procesamos con la fuente que tenemos. Adem\'as, agregamos distintas funcionalidades utiles, como guardar la informaci\'on en formato .pcap para luego poder procesarlo y realizar graficos para visualizar de una mejor manera la informaci\'on.
+Para el an\'alisis de las distintintas redes, realizamos un sniffer (\emph{sniffer.py} \footnote{-h Muestra el modo de uso}) utilizando
+la libreria Scapy en Python 3. La misma utiliza las funciones definidas para
+poder observar los paquetes que llegan y cada paquete lo procesamos con la
+fuente que tenemos. Adem\'as, agregamos distintas funcionalidades utiles, como
+guardar la informaci\'on en formato .pcap para luego poder procesarlo y
+realizar graficos para visualizar de una mejor manera la informaci\'on.
 
 \subsection{Fuentes de informacion usadas}
 
-Para el presente TP modelamos dos fuentes de memoria nula que puedan generarnos la informaci\'on que queremos analizar. En \textit{fuente.py} definimos una clase que nos sirva para poder modelar las distintas fuentes que necesitamos, adem\'as de poder tener m\'etodos que nos den informaci\'on valiosa como la entrop\'ia y las probabilidades e informaci\'on de cada uno de los simbolos. En \textit{analyse-data.py} definimos dos funciones que se encargan de agregar los simbolos para cada una de las fuentes, en base a los paquetes que se reciben. Analizaremos en detalle este proceso viendo cada una de las fuentes a continuaci\'on.
+Para el presente TP modelamos dos fuentes de memoria nula que puedan generarnos
+la informaci\'on que queremos analizar. En \textit{fuente.py} definimos una
+clase que nos sirva para poder modelar las distintas fuentes que necesitamos,
+adem\'as de poder tener m\'etodos que nos den informaci\'on valiosa como la
+entrop\'ia y las probabilidades e informaci\'on de cada uno de los simbolos. En
+\textit{analyse-data.py} definimos dos funciones que se encargan de agregar los
+simbolos para cada una de las fuentes, en base a los paquetes que se reciben.
+Analizaremos en detalle este proceso viendo cada una de las fuentes a
+continuaci\'on.
 
 \subsubsection{Fuente unicast-multicast}
 
-Como dice el nombre, esta fuente nos servir\'a para poder comparar los paquetes unicast contra los multicast. Para esto, observamos la MAC de destino de cada paquete. Si sucede que la MAC de destino es \texttt{ff:ff:ff:ff:ff:ff} nos indica que su destino son todos los nodos del dominio de broadcast, por lo tanto se trata de una direccion multicast. Caso contrario, es decir que el paquete tenga una MAC distinta a antes mencionada, significa que esta dirigido a un \'unico dispositivo y por lo tanto es unicast.
+Como dice el nombre, esta fuente nos servir\'a para poder comparar los paquetes
+unicast contra los multicast. Para esto, observamos la MAC de destino de cada
+paquete. Si sucede que la MAC de destino es \texttt{ff:ff:ff:ff:ff:ff} nos
+indica que su destino son todos los nodos del dominio de broadcast, por lo
+tanto se trata de una direccion multicast. Caso contrario, es decir que el
+paquete tenga una MAC distinta a antes mencionada, significa que esta dirigido
+a un \'unico dispositivo y por lo tanto es unicast.
 
 En \textit{analyse-data.py} definimos la funci\'on \textit{analize\_uni\_multi\_cast} que realiza lo que ya describimos tomando como entrada un paquete, y luego en base a su destino genera el simbolo correspondiente, que será unicast o multicast segun corresponda.
 
 
 \subsubsection{Fuente ARP}
 
-En esta fuente solo nos interesar\'an los paquetes ARP para poder analizar que sucede con ellos. Por lo tanto, todos los paquetes que no sean ARP no generar\'an ning\'un simbolo en esta fuente. Una vez realizado este filtro, generaremos un simbolo de acuerdo al destino que tenga el paquete.
+En esta fuente solo nos interesar\'an los paquetes ARP para poder analizar que
+sucede con ellos. Por lo tanto, todos los paquetes que no sean ARP no
+generar\'an ning\'un simbolo en esta fuente. Una vez realizado este filtro,
+generaremos un simbolo de acuerdo al destino que tenga el paquete.
 
-En \textit{analyse-data.py} definimos la funci\'on \textit{analize\_arp} que realiza lo mencionado. Notemos que adem\'as esta funci\'on es utilizada para otro proposito que es el de generar el grafo dirigido de topolog\'ia de la red agregando un eje entre el nodo que representa el dispositivo que envi\'o el paquete y el nodo que representa el que recibi\'o el paquete. Adem\'s decidimos etiquetar con su direcci\'n MAC al nodo que representa los mensajes del tipo brodcast.
+En \textit{analyse-data.py}\footnote{-h Muestra el modo de uso} definimos la funci\'on \textit{analize\_arp} que
+realiza lo mencionado. Notemos que adem\'as esta funci\'on es utilizada para
+otro proposito que es el de generar el grafo dirigido de topolog\'ia de la red
+agregando un eje entre el nodo que representa el dispositivo que envi\'o el
+paquete y el nodo que representa el que recibi\'o el paquete. Adem\'s decidimos
+etiquetar con su direcci\'n MAC al nodo que representa los mensajes del tipo
+brodcast.
+
