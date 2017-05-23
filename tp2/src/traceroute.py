@@ -23,22 +23,22 @@ def traceroute(ipdst, packets_per_host=30, timeout=20,
             # Envia el paquete cronometrando cuanto tiempo tarda
             # entre que se envia y se recibe para conseguir
             # un RTT aproximado
-            t1 = time.time()
             packet = sr(IP(dst=ipdst, ttl=ttl)/ICMP(),
                         timeout=timeout,
                         verbose=verbose)
-            t2 = time.time()
 
             # Si no llego respuesta descarta este paquete
             if len(packet[0][ICMP]) == 0:
                 continue
 
-            icmp_response = packet[0][ICMP][0][1]
+            tx, rx = packet[0][ICMP][0]
 
-            ip_recv = icmp_response.src
+
+            ip_recv = rx.src
             ips[ip_recv] = ips.get(ip_recv, 0) + 1
 
-            total_rtt.append(t2-t1)
+            total_rtt.append(rx.time-tx.sent_time)
+
 
         # Extrae de todas las ips la que mas aparecio
         ip = max(ips.items(),key=operator.itemgetter(1))[0]
