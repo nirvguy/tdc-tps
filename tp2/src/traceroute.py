@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 import time
 import operator
+import argparse
+import json
 from scapy.all import *
 from utils import mean_std, cov
 
@@ -64,3 +66,28 @@ def traceroute(ipdst, packets_per_host=30, timeout=20,
         if ip == ipdst:
             break
     return result
+
+def main():
+    parser = argparse.ArgumentParser(description='Traceroute')
+    parser.add_argument('ip', type=str, help='Ip de destino')
+    parser.add_argument('--packets-per-host', type=int, default=30, help="Packets por host")
+    parser.add_argument('--timeout', type=int, default=20, help="Timeout de cada paquete en segundos")
+    parser.add_argument('--max-ttl', type=int, default=60, help="Max ttl")
+    parser.add_argument('-j', "--use-json", dest='use_json', action='store_true', help="Establece la salida en formato json")
+    parser.add_argument("--no-use-json", dest='use_json', action='store_false', help="No imprime la salida en formato json. Por defecto.")
+    parser.set_defaults(use_json=False)
+    args = parser.parse_args()
+    trace = traceroute(args.ip,
+                       timeout=args.timeout,
+                       max_ttl=args.max_ttl,
+                       packets_per_host=args.packets_per_host)
+    if args.use_json:
+        json.dump({'trace' : trace})
+    else:
+        for t in trace:
+            print("{} \t {:3.3f} ms \t (+/- {:3.3f} ms)".format(t['ip'],
+                                                                t['rtt'][0] * 1000,
+                                                                t['rtt'][1] * 1000))
+
+if __name__ == '__main__':
+    main()
