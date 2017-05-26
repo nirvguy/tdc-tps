@@ -88,7 +88,7 @@ def main():
                        max_ttl=args.max_ttl,
                        packets_per_host=args.packets_per_host)
     if args.use_json:
-        json.dump({'trace' : trace})
+        print(json.dumps({'trace' : trace}, indent=6))
     else:
         for t in trace:
             print("{} \t {:3.3f} ms".format(t['ip'],
