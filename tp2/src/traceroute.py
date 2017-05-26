@@ -6,6 +6,12 @@ import json
 from scapy.all import *
 from utils import mean, std
 
+DEBUG = True
+
+def print_debug(*args, **kwargs):
+    if DEBUG:
+        print(*args, **kwargs, file=sys.stderr)
+
 def traceroute(ipdst, packets_per_host=30, timeout=20,
                verbose=False, max_ttl=100):
     """ Traceroute mediante el metodo de ttl seeder
@@ -41,6 +47,11 @@ def traceroute(ipdst, packets_per_host=30, timeout=20,
             total_rtt.append(rx.time-tx.sent_time)
 
 
+        print_debug("--------------------------------------------")
+        print_debug("TTL: {}".format(ttl))
+        print_debug("IPS: {}".format(ips))
+        print_debug("RTTS: {}".format(total_rtt))
+        print_debug("--------------------------------------------")
         # Extrae de todas las ips la que mas aparecio
         ip = max(ips.items(),key=operator.itemgetter(1))[0]
 
