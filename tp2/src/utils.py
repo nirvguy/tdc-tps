@@ -1,10 +1,14 @@
 #!/usr/bin/python3
 import math
 
-def mean_std(xs):
+def mean(xs):
     mean = sum(xs)/len(xs)
-    std = math.sqrt(sum((x-mean)**2 for x in xs)/len(xs))
-    return mean, std
+    return mean
+
+def std(xs, mu=None):
+    if mu is None:
+        mu = mean(xs)
+    return math.sqrt(sum((x-mu)**2 for x in xs))
 
 def cov(xs, ys):
     mean_xs = sum(xs)/len(xs)

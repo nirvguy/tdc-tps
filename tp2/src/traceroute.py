@@ -4,7 +4,7 @@ import operator
 import argparse
 import json
 from scapy.all import *
-from utils import mean_std, cov
+from utils import mean, std
 
 def traceroute(ipdst, packets_per_host=30, timeout=20,
                verbose=False, max_ttl=100):
@@ -16,7 +16,6 @@ def traceroute(ipdst, packets_per_host=30, timeout=20,
     """
     result = []
     # RTTs totales de cada paquete para el ttl anterior
-    prev_total_rtt = None
     for ttl in range(1, max_ttl+1):
         # Diccionario con las ips que van apareciendo para el mismo ttl
         ips = dict()
@@ -47,20 +46,16 @@ def traceroute(ipdst, packets_per_host=30, timeout=20,
 
         # Mide el RTT del salto actual restando
         # el RTT total actual y el RTT total anterior
-        if prev_total_rtt:
-            mean_total_rtt, std_total_rtt = mean_std(total_rtt)
-            mean_prev_total_rtt, std_prev_total_rtt = mean_std(prev_total_rtt)
-            mean_rtt = mean_total_rtt - mean_prev_total_rtt
-            # TODO: Verificar esto
-            std_rtt = math.sqrt(std_total_rtt**2 +
-                                std_prev_total_rtt**2)
+        if result:
+            avg = mean(total_rtt)
+            prev_avg = result[-1]['rtt']
+            mean_rtt = avg - prev_avg
         else: # Si es el primer salto, rtt total = rtt salto
-            mean_rtt, std_rtt = mean_std(total_rtt)
+            mean_rtt = mean(total_rtt)
 
-        prev_total_rtt = list(total_rtt)
 
         result.append({'ip':ip,
-                       'rtt':(mean_rtt, std_rtt)})
+                       'rtt':mean_rtt})
 
         # Termina si alcanza la ip de destino
         if ip == ipdst:
@@ -85,9 +80,8 @@ def main():
         json.dump({'trace' : trace})
     else:
         for t in trace:
-            print("{} \t {:3.3f} ms \t (+/- {:3.3f} ms)".format(t['ip'],
-                                                                t['rtt'][0] * 1000,
-                                                                t['rtt'][1] * 1000))
+            print("{} \t {:3.3f} ms".format(t['ip'],
+                                             t['rtt'] * 1000))
 
 if __name__ == '__main__':
     main()
