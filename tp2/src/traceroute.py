@@ -73,6 +73,39 @@ def traceroute(ipdst, packets_per_host=30, timeout=20,
             break
     return result
 
+table_t = [None,       # n = 0
+           None,       # n = 1
+           None,       # n = 2
+           1.1511,     # n = 3
+           1.4250,     # n = 4
+           1.5712,     # n = 5
+           1.6563,     # n = 6
+           1.7110,     # n = 7
+           1.7491,     # n = 8
+           1.7770,     # n = 9
+           1.7984,     # n = 10
+           1.8153,     # n = 11
+           1.8290,     # n = 12
+           1.8403,     # n = 13
+           1.8498,     # n = 14
+           1.8579,     # n = 15
+           1.8649,     # n = 16
+           1.8710,     # n = 17
+           1.8764,     # n = 18
+           1.8811,     # n = 19
+           1.8853,     # n = 20
+           1,8891,     # n = 21
+           1.8926,     # n = 22
+           1,8957,     # n = 23
+           1.8985,     # n = 24
+           1.9011,     # n = 25
+           1.9035,     # n = 26
+           1.9057,     # n = 27
+           1.9078,     # n = 28
+           1.9096,     # n = 29
+           1.9114,     # n = 30
+           ]
+
 def main():
     parser = argparse.ArgumentParser(description='Traceroute')
     parser.add_argument('ip', type=str, help='Ip de destino')
@@ -87,12 +120,26 @@ def main():
                        timeout=args.timeout,
                        max_ttl=args.max_ttl,
                        packets_per_host=args.packets_per_host)
+    rtts = [e['rtt'] for e in trace]
+    print(rtts)
+
+    mu_rtt = mean(rtts)
+    print(mu_rtt)
+    std_rtt = std(rtts, mu_rtt)
+    print(std_rtt)
+    for i, h in enumerate(trace):
+        n = (h['rtt'] - mu_rtt) / std_rtt
+        trace[i]['norm_rtt'] = n
+        trace[i]['intercontinental'] = abs(n)>table_t[len(trace)]
+
     if args.use_json:
         print(json.dumps({'trace' : trace}, indent=6))
     else:
         for t in trace:
-            print("{} \t {:3.3f} ms".format(t['ip'],
-                                             t['rtt'] * 1000))
+            print("{} \t {:3.3f} ms \t {:3.3f} intercontinental={}".format(t['ip'],
+                                                          t['rtt'] * 1000,
+                                                          t['norm_rtt'],
+                                                          t['intercontinental']))
 
 if __name__ == '__main__':
     main()
