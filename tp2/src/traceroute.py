@@ -114,7 +114,7 @@ def main():
     parser = argparse.ArgumentParser(description='Traceroute')
     parser.add_argument('ip', type=str, help='Ip de destino')
     parser.add_argument('--packets-per-host', type=int, default=30, help="Packets por host")
-    parser.add_argument('--timeout', type=int, default=20, help="Timeout de cada paquete en segundos")
+    parser.add_argument('--timeout', type=int, default=10, help="Timeout de cada paquete en segundos")
     parser.add_argument('--max-ttl', type=int, default=60, help="Max ttl")
     parser.add_argument('-j', "--use-json", dest='use_json', action='store_true', help="Establece la salida en formato json")
     parser.add_argument("--no-use-json", dest='use_json', action='store_false', help="No imprime la salida en formato json. Por defecto.")
