@@ -52,6 +52,10 @@ def traceroute(ipdst, packets_per_host=30, timeout=20,
         print_debug("IPS: {}".format(ips))
         print_debug("RTTS: {}".format(total_rtt))
         print_debug("--------------------------------------------")
+
+        if not ips:
+            continue
+
         # Extrae de todas las ips la que mas aparecio
         ip = max(ips.items(),key=operator.itemgetter(1))[0]
 
@@ -137,9 +141,9 @@ def main():
     else:
         for t in trace:
             print("{} \t {:3.3f} ms \t {:3.3f} intercontinental={}".format(t['ip'],
-                                                          t['rtt'] * 1000,
-                                                          t['norm_rtt'],
-                                                          t['intercontinental']))
+                                                                           t['rtt'] * 1000,
+                                                                           t['norm_rtt'],
+                                                                           t['intercontinental']))
 
 if __name__ == '__main__':
     main()

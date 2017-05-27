@@ -9,9 +9,3 @@ def std(xs, mu=None):
     if mu is None:
         mu = mean(xs)
     return math.sqrt(sum((x-mu)**2 for x in xs)/len(xs))
-
-def cov(xs, ys):
-    mean_xs = sum(xs)/len(xs)
-    mean_ys = sum(ys)/len(ys)
-    return sum((x-mean_xs)*(y-mean_ys) for x,y in zip(xs, ys))/len(xs)
-
