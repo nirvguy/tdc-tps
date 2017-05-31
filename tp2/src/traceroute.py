@@ -132,12 +132,15 @@ def main():
                        max_ttl=args.max_ttl,
                        packets_per_host=args.packets_per_host)
     rtts = [e['rtt'] for e in trace]
-    print(rtts)
+    print_debug(rtts)
 
     mu_rtt = mean(rtts)
-    print(mu_rtt)
+    print_debug("n: " + str(len(trace)))
+    print_debug("AVG: " + str(mu_rtt))
     std_rtt = std(rtts, mu_rtt)
-    print(std_rtt)
+    print_debug("STD: " + str(std_rtt))
+    print_debug("Table: " + str(table_t[len(trace)]))
+    print_debug("min, max: {} a {}".format(-table_t[len(trace)] * std_rtt + mu_rtt , table_t[len(trace)] * std_rtt + mu_rtt))
     for i, h in enumerate(trace):
         n = (h['rtt'] - mu_rtt) / std_rtt
         trace[i]['norm_rtt'] = n
@@ -147,8 +150,8 @@ def main():
         print(json.dumps({'trace' : trace}, indent=6))
     else:
         for t in trace:
-            print("{} \t {:3.3f} ms \t {:3.3f} intercontinental={}".format(t['ip'],
-                                                                           t['rtt'] * 1000,
+            print("{} \t {:3.3f} s \t {:3.3f} intercontinental={}".format(t['ip'],
+                                                                           t['rtt'],
                                                                            t['norm_rtt'],
                                                                            t['intercontinental']))
 
