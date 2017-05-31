@@ -27,7 +27,7 @@ def plot(trace, value_table):
     ax.bar(ind, rtts, bar_width)
     ax.set_xticks(list(map(lambda x:x-0.5, ind_labels)))
     ax.set_ylabel('Z=(X-mu)/S enlace')
-    ax.text(0.5, value_table + 0.1, 'Entropía', color='orange', fontsize=20)
+    ax.text(0.5, value_table + 0.1, 'Nivel de corte', color='orange', fontsize=20)
     ax.axhline(y=value_table, color='red')
     ax.set_xticklabels(labels, rotation=90)
     fig.tight_layout()
