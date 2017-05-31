@@ -12,15 +12,19 @@ def print_debug(*args, **kwargs):
     if DEBUG:
         print(*args, **kwargs, file=sys.stderr)
 
-def traceroute(ipdst, packets_per_host=30, timeout=20,
+def traceroute(ipdst, packets_per_host=30, timeout=20, iface=None,
                verbose=False, max_ttl=100):
     """ Traceroute mediante el metodo de ttl seeder
         @param ipdst Ip de destino
         @param packets_per_host Cuantos paquetes se envían
                                 para el mismo ttl
+        @param iface  Interface
         @timeout Timeout de cada paquete
     """
     result = []
+    extra_args = {}
+    if iface:
+        extra_args = {'iface' : iface}
     # RTTs totales de cada paquete para el ttl anterior
     for ttl in range(1, max_ttl+1):
         # Diccionario con las ips que van apareciendo para el mismo ttl
@@ -32,7 +36,8 @@ def traceroute(ipdst, packets_per_host=30, timeout=20,
             # un RTT aproximado
             packet = sr(IP(dst=ipdst, ttl=ttl)/ICMP(),
                         timeout=timeout,
-                        verbose=verbose)
+                        verbose=verbose,
+                        **extra_args)
 
             # Si no llego respuesta descarta este paquete
             if len(packet[0][ICMP]) == 0:
@@ -113,6 +118,7 @@ table_t = [None,       # n = 0
 def main():
     parser = argparse.ArgumentParser(description='Traceroute')
     parser.add_argument('ip', type=str, help='Ip de destino')
+    parser.add_argument('--iface', type=str, default='', help="Interfaz de red")
     parser.add_argument('--packets-per-host', type=int, default=30, help="Packets por host")
     parser.add_argument('--timeout', type=int, default=10, help="Timeout de cada paquete en segundos")
     parser.add_argument('--max-ttl', type=int, default=60, help="Max ttl")
@@ -121,6 +127,7 @@ def main():
     parser.set_defaults(use_json=False)
     args = parser.parse_args()
     trace = traceroute(args.ip,
+                       iface=args.iface,
                        timeout=args.timeout,
                        max_ttl=args.max_ttl,
                        packets_per_host=args.packets_per_host)
