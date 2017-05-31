@@ -138,22 +138,25 @@ def main():
     print_debug("n: " + str(len(trace)))
     print_debug("AVG: " + str(mu_rtt))
     std_rtt = std(rtts, mu_rtt)
+    value_table = table_t[len(trace)]
     print_debug("STD: " + str(std_rtt))
     print_debug("Table: " + str(table_t[len(trace)]))
     print_debug("min, max: {} a {}".format(-table_t[len(trace)] * std_rtt + mu_rtt , table_t[len(trace)] * std_rtt + mu_rtt))
     for i, h in enumerate(trace):
         n = (h['rtt'] - mu_rtt) / std_rtt
         trace[i]['norm_rtt'] = n
-        trace[i]['intercontinental'] = abs(n)>table_t[len(trace)]
+        trace[i]['intercontinental'] = abs(n)>value_table
 
     if args.use_json:
-        print(json.dumps({'trace' : trace}, indent=6))
+        print(json.dumps({'trace' : trace,
+                          'value_table': value_table }, indent=6))
     else:
         for t in trace:
-            print("{} \t {:3.3f} s \t {:3.3f} intercontinental={}".format(t['ip'],
+            print("{} \t {:3.3f} \t {:3.3f} intercontinental={}".format(t['ip'],
                                                                            t['rtt'],
                                                                            t['norm_rtt'],
                                                                            t['intercontinental']))
+        print("Valor Table t: ", value_table)
 
 if __name__ == '__main__':
     main()
