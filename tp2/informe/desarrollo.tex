@@ -1,0 +1,31 @@
+\subsection{Traceroute}
+
+En este trabajo se desarrolló una herramienta conocida como traceroute. Esta
+consta en descubir cual es la ruta a un determinado host en la transmisión 
+de un paquete de una maquina a otra. En otras palabras, qué routers estan
+involucrados desde que el paquete sale hasta que llega al host destinatario.
+
+Para llevar esto a cabo hay, al menos, dos posibles alternativas. El primer
+algoritmo consiste en la técnica llamada \emph{TTL seeder} sobre el protocolo
+ICMP que se explicará a continuación. La segunda, especificada en el \emph{RFC
+1393}, hace uso de ciertas opciones avanzadas de los datagramas IP en donde
+cada router (gateway) pone su dirección IP en el paquete TCP/IP. Las ventas de este último
+algoritmo es que, como se explicará mas adelante, este da información 100\%
+confiable de la ruta cuando el primero no. Pero cuenta con la desventaja
+de que es no es un standard obligatorio y por tanto es posible que haya
+routers (gateways) que no lo implementen. Es por esto que en este trabajo se implementará
+el primer algoritmo.
+
+\subsubsection{Protocolo \textbf{ICMP}}
+
+\textbf{ICMP} (\emph{Internet Control Message Protocol}) es un protocolo que
+forma parte de la arquitectura \textbf{TCP/IP} pensado para mensajes de control
+de Internet. Se utiliza en situaciones, y distintos própositos como
+
+\begin{itemize}
+	\item Cuando un datagrama no puede alcanzar su destino
+	\item Cuando un router no tiene la capacidad de forwardear este paquete
+	\item Redirigir el host hacia una ruta más corta para el envio del paquete
+	\item Se quiere comprobar que una maquína esta viva (\textbf{ping})
+	\item Se quiere saber la ruta a un determinado host (\textbf{traceroute})
+\end{itemize}
