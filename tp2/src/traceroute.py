@@ -80,6 +80,8 @@ def traceroute(ipdst, packets_per_host=30, timeout=20, iface=None,
 
             std_total_rtt = std(total_rtt, mu=mean_total_rtt)
 
+        if mean_rtt_e < 0:
+            continue
 
         result.append({'ip':ip,
                        'mean_total_rtt' : mean_total_rtt,
