@@ -52,7 +52,6 @@ def plot(trace, value_table):
     ax2.set_ylabel('Total RTT (ms)', color='r', fontsize=20)
 
     plt.tight_layout()
-    plt.show()
 
 def main():
     if len(sys.argv) < 2:
@@ -68,6 +67,8 @@ def main():
             raise Exception("Archivo json invalido!")
 
         plot(data['trace'], data['value_table'])
+        plt.savefig(sys.stdout.buffer)
+
 
 if __name__ == '__main__':
     main()
