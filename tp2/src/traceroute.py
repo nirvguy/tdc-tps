@@ -64,18 +64,27 @@ def traceroute(ipdst, packets_per_host=30, timeout=20, iface=None,
         # Extrae de todas las ips la que mas aparecio
         ip = max(ips.items(),key=operator.itemgetter(1))[0]
 
+        mean_total_rtt = None
+        std_total_rtt = None
+        mean_rtt_e = None
         # Mide el RTT del salto actual restando
         # el RTT total actual y el RTT total anterior
         if result:
-            avg = mean(total_rtt)
-            prev_avg = result[-1]['rtt']
-            mean_rtt = avg - prev_avg
+            mean_total_rtt = mean(total_rtt)
+            mean_rtt_e = mean_total_rtt - result[-1]['mean_total_rtt']
+
+
+            std_total_rtt = std(total_rtt, mu=mean_total_rtt)
         else: # Si es el primer salto, rtt total = rtt salto
-            mean_rtt = mean(total_rtt)
+            mean_total_rtt = mean_rtt_e = mean(total_rtt)
+
+            std_total_rtt = std(total_rtt, mu=mean_total_rtt)
 
 
         result.append({'ip':ip,
-                       'rtt':mean_rtt})
+                       'mean_total_rtt' : mean_total_rtt,
+                       'std_total_rtt' : std_total_rtt,
+                       'mean_rtt_e': mean_rtt_e})
 
         # Termina si alcanza la ip de destino
         if ip == ipdst:
@@ -131,31 +140,38 @@ def main():
                        timeout=args.timeout,
                        max_ttl=args.max_ttl,
                        packets_per_host=args.packets_per_host)
-    rtts = [e['rtt'] for e in trace]
-    print_debug(rtts)
+    delta_rtts = [e['mean_rtt_e'] for e in trace]
+    print_debug(delta_rtts)
 
-    mu_rtt = mean(rtts)
-    print_debug("n: " + str(len(trace)))
-    print_debug("AVG: " + str(mu_rtt))
-    std_rtt = std(rtts, mu_rtt)
+    mu_delta_rtts = mean(delta_rtts)
+    std_delta_rtts = std(delta_rtts, mu_delta_rtts)
+
     value_table = table_t[len(trace)]
-    print_debug("STD: " + str(std_rtt))
+
+    print_debug("n: " + str(len(trace)))
+    print_debug("AVG(ms): " + str(mu_delta_rtts * 1000))
+    print_debug("STD(ms): " + str(std_delta_rtts * 1000))
     print_debug("Table: " + str(table_t[len(trace)]))
-    print_debug("min, max: {} a {}".format(-table_t[len(trace)] * std_rtt + mu_rtt , table_t[len(trace)] * std_rtt + mu_rtt))
-    for i, h in enumerate(trace):
-        n = (h['rtt'] - mu_rtt) / std_rtt
+    print_debug("min, max: {} ms a {} ms".format(-table_t[len(trace)] * std_delta_rtts + mu_delta_rtts) * 1000,
+                                                 (table_t[len(trace)] * std_delta_rtts + mu_delta_rtts) * 1000)
+
+    for i, delta_rtt in enumerate(delta_rtts):
+        n = abs((delta_rtt - mu_delta_rtts) / std_delta_rtts)
         trace[i]['norm_rtt'] = n
-        trace[i]['intercontinental'] = abs(n)>value_table
+        trace[i]['intercontinental'] = n > value_table
 
     if args.use_json:
         print(json.dumps({'trace' : trace,
                           'value_table': value_table }, indent=6))
     else:
+        print("IP \t Total RTT \t Std Total RTT \t Delta RTT \t Z Delta RTT \t Intercontinental ")
         for t in trace:
-            print("{} \t {:3.3f} \t {:3.3f} intercontinental={}".format(t['ip'],
-                                                                           t['rtt'],
-                                                                           t['norm_rtt'],
-                                                                           t['intercontinental']))
+            print("{} \t {:3.3f} ms \t {:3.3f} ms \t {:3.3f} ms \t {:1.3f} \t {}".format(t['ip'],
+                                                                                t['mean_total_rtt'] * 1000,
+                                                                                t['std_total_rtt'] * 1000,
+                                                                                t['mean_rtt_e'] * 1000,
+                                                                                t['norm_rtt'],
+                                                                                t['intercontinental']))
         print("Valor Table t: ", value_table)
 
 if __name__ == '__main__':
