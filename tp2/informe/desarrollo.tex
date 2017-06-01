@@ -6,7 +6,7 @@ involucrados desde que el paquete sale hasta que llega al host destinatario.
 Para llevar esto a cabo hay, al menos, dos posibles alternativas. El primer
 algoritmo consiste en la técnica llamada \emph{TTL seeder} sobre el protocolo
 ICMP que se explicará a continuación. La segunda, especificada en el \emph{RFC
-1393}, hace uso de ciertas opciones avanzadas de los datagramas IP en donde
+1393} \cite{rfc1393}, hace uso de ciertas opciones avanzadas de los datagramas IP en donde
 cada router (gateway) pone su dirección IP en el paquete TCP/IP. Las ventajas
 de este último algoritmo es que este da la ruta efectiva
 cuando el primero solo da una aproximación. Pero cuenta con la desventaja de que no es un standard
@@ -16,7 +16,7 @@ algoritmo.
 
 \subsubsection{Protocolo \textbf{ICMP}}
 
-\textbf{ICMP} (\emph{Internet Control Message Protocol}) es un protocolo que
+\textbf{ICMP}\cite{rfc792} (\emph{Internet Control Message Protocol}) es un protocolo que
 forma parte de la arquitectura \textbf{TCP/IP} pensado para mensajes de control
 de Internet. Se utiliza en situaciones, y distintos própositos como
 
@@ -101,7 +101,7 @@ el valor de cada uno con la siguiente formula.
 
 Este valor $Z_{i}$ es de vital importancia ya que nos dice, estadisticamente,
 para $\Delta RTT_{i}$ cuantas desvaciones estandar se aleja de la media.
-Combinando esto con el trabajo de TODO: CITA Cimbala nos da una forma de
+Combinando esto con el trabajo de John M. Cimbala\cite{cimbala} nos da una forma de
 detectar cuando en un muestreo se presentó un outlier dependiendo también de la
 cantidad de muestras. La aplicación que tiene en el trabajo realizado es que se
 termina identificando cuando el $RTT$ del enlace es atípicamente alto los que nos
