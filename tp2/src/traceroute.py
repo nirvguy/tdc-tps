@@ -154,8 +154,8 @@ def main():
     print_debug("AVG(ms): " + str(mu_delta_rtts * 1000))
     print_debug("STD(ms): " + str(std_delta_rtts * 1000))
     print_debug("Table: " + str(table_t[len(trace)]))
-    print_debug("min, max: {} ms a {} ms".format(-table_t[len(trace)] * std_delta_rtts + mu_delta_rtts) * 1000,
-                                                 (table_t[len(trace)] * std_delta_rtts + mu_delta_rtts) * 1000)
+    print_debug("min, max: {} ms a {} ms".format((-table_t[len(trace)] * std_delta_rtts + mu_delta_rtts) * 1000,\
+                                                 (table_t[len(trace)] * std_delta_rtts + mu_delta_rtts) * 1000))
 
     for i, delta_rtt in enumerate(delta_rtts):
         n = abs((delta_rtt - mu_delta_rtts) / std_delta_rtts)
