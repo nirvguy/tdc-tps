@@ -32,6 +32,14 @@ de Internet. Se utiliza en situaciones, y distintos própositos como
 
 \subsubsection{Descripción del algoritmo}
 
+\begin{figure}[ht]
+	\begin{center}
+		\includegraphics[width=0.8\columnwidth]{imagenes/diagrama_1.jpg}
+		\caption{Diagrama de envio de paquetes del algoritmo}
+		\label{fig:diagramasimple}
+	\end{center}
+\end{figure}
+
 Sea $S$ el host que desea enviar el paquete y $T$ el host destino.
 El algoritmo consiste en enviar desde $S$ al host de destino $T$ paquetes
 \emph{echo} con el campo $TTL=i$ en el datagrama \textbf{IP} para $i=1 \dots
@@ -39,14 +47,15 @@ MAX\_HOPS$ o hasta que se haya alcanzado al host $T$. Cada vez que el paquete
 es forwardeado por un gateway al próximo host (Next Hope), este decrementará el
 valor de este TTL. Cuando el valor llegue a cero el último gateway, llamemoslo
 $M$, le informará mediante un paquete \textbf{ICMP} que el host de destino $T$
-es inalcanzable, obteniendo a su vez $S$ con esto, la \textbf{IP} de $M$ como
+es inalcanzable (ver figura \ref{fig:diagramasimple}), obteniendo a su vez $S$ con esto, la \textbf{IP} de $M$ como
 tambien la estimación del \textit{Round
 Trip Time} (RTT) a este host $M$, y como se explicará luego el $RTT$ del enlace
 del anterior gateway hasta este. Como esto se realiza reiteradas veces, en
 cada paso, aumentando el TTL se llegan a conocer, en teoría, todos los
-gateways, desde $S$, intermedios hasta llegar al destino $T$. 
+gateways, desde $S$, intermedios hasta llegar al destino $T$.
 
 \subsubsection{Posibles problemas en la vida real}
+
 
 Esto brinda en teoria una ruta efectiva bajo los supuestos de que
 las rutas intermedias de forwarding se mantienen invariantes en el tiempo. En
@@ -54,11 +63,19 @@ la practica, esto no es usual dando a lugar a los siguientes inconvenientes
 
 \begin{itemize}
 	\item En cada salto es posible que cambien los gateways anteriores y siendo
-	ademas imposible de detectar.
+	ademas imposible de detectar. (esto se puede ver en la figura \ref{fig:diagramareal})
 	\item El \textbf{RTT} estimado incluye al tiempo de encolamiento (es por esto
 	que se le llama estimado) provocando una desviación significativa en las
 	mediciones.
 \end{itemize}
+
+\begin{figure}[ht]
+	\begin{center}
+		\includegraphics[width=0.8\columnwidth]{imagenes/diagrama_2.jpg}
+		\caption{Diagrama de envio de paquetes del algoritmo}
+		\label{fig:diagramareal}
+	\end{center}
+\end{figure}
 
 Para solventar este tipo de problemas, para cada $TTL$ se envian varios paquetes
 para luego obtener un valor promedio de $RTT$ mas significativo que el de un
