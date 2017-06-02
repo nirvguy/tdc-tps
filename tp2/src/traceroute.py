@@ -25,8 +25,10 @@ def traceroute(ipdst, packets_per_host=30, timeout=20, iface=None,
     extra_args = {}
     if iface:
         extra_args = {'iface' : iface}
+    ttl = 1
+    bounded = False
     # RTTs totales de cada paquete para el ttl anterior
-    for ttl in range(1, max_ttl+1):
+    while ttl <= max_ttl and not bounded:
         # Diccionario con las ips que van apareciendo para el mismo ttl
         ips = dict()
         total_rtt = []
@@ -45,6 +47,8 @@ def traceroute(ipdst, packets_per_host=30, timeout=20, iface=None,
 
             tx, rx = packet[0][ICMP][0]
 
+            if rx.type == 0:
+                bounded = True
 
             ip_recv = rx.src
             ips[ip_recv] = ips.get(ip_recv, 0) + 1
@@ -59,6 +63,7 @@ def traceroute(ipdst, packets_per_host=30, timeout=20, iface=None,
         print_debug("--------------------------------------------")
 
         if not ips:
+            ttl += 1
             continue
 
         # Extrae de todas las ips la que mas aparecio
@@ -81,16 +86,15 @@ def traceroute(ipdst, packets_per_host=30, timeout=20, iface=None,
             std_total_rtt = std(total_rtt, mu=mean_total_rtt)
 
         if mean_rtt_e < 0:
+            ttl += 1
             continue
 
         result.append({'ip':ip,
                        'mean_total_rtt' : mean_total_rtt,
                        'std_total_rtt' : std_total_rtt,
                        'mean_rtt_e': mean_rtt_e})
+        ttl += 1
 
-        # Termina si alcanza la ip de destino
-        if ip == ipdst:
-            break
     return result
 
 table_t = [None,       # n = 0
