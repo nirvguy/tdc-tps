@@ -1,0 +1,101 @@
+{
+      "trace": [
+            {
+                  "ip": "192.168.1.1",
+                  "mean_total_rtt": 0.002433932744539701,
+                  "std_total_rtt": 0.0007652599206902879,
+                  "mean_rtt_e": 0.002433932744539701,
+                  "norm_rtt": 0.6315507038177374,
+                  "intercontinental": false
+            },
+            {
+                  "ip": "200.3.60.22",
+                  "mean_total_rtt": 0.019821929931640624,
+                  "std_total_rtt": 0.0010137302224099034,
+                  "mean_rtt_e": 0.017387997187100924,
+                  "norm_rtt": 0.281042018636278,
+                  "intercontinental": false
+            },
+            {
+                  "ip": "181.88.169.2",
+                  "mean_total_rtt": 0.019980875651041667,
+                  "std_total_rtt": 0.000810608407272618,
+                  "mean_rtt_e": 0.00015894571940104282,
+                  "norm_rtt": 0.6848741807927808,
+                  "intercontinental": false
+            },
+            {
+                  "ip": "181.88.108.233",
+                  "mean_total_rtt": 0.023403247197469074,
+                  "std_total_rtt": 0.0023614466258331593,
+                  "mean_rtt_e": 0.0034223715464274072,
+                  "norm_rtt": 0.6083826623690235,
+                  "intercontinental": false
+            },
+            {
+                  "ip": "190.225.252.166",
+                  "mean_total_rtt": 0.027910367647806803,
+                  "std_total_rtt": 0.012701544298252125,
+                  "mean_rtt_e": 0.004507120450337729,
+                  "norm_rtt": 0.5829572060643483,
+                  "intercontinental": false
+            },
+            {
+                  "ip": "89.221.41.177",
+                  "mean_total_rtt": 0.1672137498855591,
+                  "std_total_rtt": 0.003694308078306088,
+                  "mean_rtt_e": 0.1393033822377523,
+                  "norm_rtt": 2.5765356975512463,
+                  "intercontinental": true
+            },
+            {
+                  "ip": "4.69.158.249",
+                  "mean_total_rtt": 0.19239770571390788,
+                  "std_total_rtt": 0.10477739394058573,
+                  "mean_rtt_e": 0.025183955828348786,
+                  "norm_rtt": 0.09831235182438254,
+                  "intercontinental": false
+            },
+            {
+                  "ip": "213.242.110.198",
+                  "mean_total_rtt": 0.20724272727966309,
+                  "std_total_rtt": 0.0,
+                  "mean_rtt_e": 0.014845021565755206,
+                  "norm_rtt": 0.3406468869254326,
+                  "intercontinental": false
+            },
+            {
+                  "ip": "194.85.40.229",
+                  "mean_total_rtt": 0.3119269053141276,
+                  "std_total_rtt": 0.00399645833302717,
+                  "mean_rtt_e": 0.1046841780344645,
+                  "norm_rtt": 1.7650953166480476,
+                  "intercontinental": false
+            },
+            {
+                  "ip": "194.85.40.214",
+                  "mean_total_rtt": 0.31770521799723306,
+                  "std_total_rtt": 0.015615084120114139,
+                  "mean_rtt_e": 0.005778312683105469,
+                  "norm_rtt": 0.553161699977577,
+                  "intercontinental": false
+            },
+            {
+                  "ip": "194.190.255.222",
+                  "mean_total_rtt": 0.334749976793925,
+                  "std_total_rtt": 0.01827287628512517,
+                  "mean_rtt_e": 0.017044758796691928,
+                  "norm_rtt": 0.2890871917320716,
+                  "intercontinental": false
+            },
+            {
+                  "ip": "80.250.174.51",
+                  "mean_total_rtt": 0.3525401198345682,
+                  "std_total_rtt": 0.023319584381705016,
+                  "mean_rtt_e": 0.01779014304064319,
+                  "norm_rtt": 0.2716161120596621,
+                  "intercontinental": false
+            }
+      ],
+      "value_table": 1.829
+}
