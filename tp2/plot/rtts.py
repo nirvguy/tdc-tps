@@ -10,9 +10,6 @@ import math
 def plot(trace, value_table):
     length = len(trace)
     ind_labels = range(length)
-    labels = []
-    for i in ind_labels:
-        labels.append(trace[i-1]['ip'])
 
     plt.rc('text', usetex=True)
 
@@ -20,6 +17,7 @@ def plot(trace, value_table):
     ax2 = ax1.twinx()
 
     # Carga datos apartir de trace
+    labels = list(map(operator.itemgetter('ip'), trace))
     mean_rtts = list(map(lambda x: x['mean_total_rtt'] * 1000, trace))
     std_rtts = list(map(lambda x: x['std_total_rtt'] * 1000,trace))
     norm_rtts = list(map(operator.itemgetter('norm_rtt'),trace))
