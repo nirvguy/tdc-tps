@@ -12,7 +12,7 @@ def print_debug(*args, **kwargs):
     if DEBUG:
         print(*args, **kwargs, file=sys.stderr)
 
-def traceroute(ipdst, packets_per_host=30, timeout=20, iface=None,
+def traceroute(ipdst, packets_per_host=30, timeout=2, iface=None,
                verbose=False, max_ttl=100):
     """ Traceroute mediante el metodo de ttl seeder
         @param ipdst Ip de destino
@@ -135,7 +135,7 @@ def main():
     parser.add_argument('ip', type=str, help='Ip de destino')
     parser.add_argument('--iface', type=str, default='', help="Interfaz de red")
     parser.add_argument('--packets-per-host', type=int, default=30, help="Packets por host")
-    parser.add_argument('--timeout', type=int, default=10, help="Timeout de cada paquete en segundos")
+    parser.add_argument('--timeout', type=int, default=2, help="Timeout de cada paquete en segundos")
     parser.add_argument('--max-ttl', type=int, default=60, help="Max ttl")
     parser.add_argument('-j', "--use-json", dest='use_json', action='store_true', help="Establece la salida en formato json")
     parser.add_argument("--no-use-json", dest='use_json', action='store_false', help="No imprime la salida en formato json. Por defecto.")
