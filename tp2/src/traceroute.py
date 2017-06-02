@@ -85,6 +85,8 @@ def traceroute(ipdst, packets_per_host=30, timeout=2, iface=None,
 
             std_total_rtt = std(total_rtt, mu=mean_total_rtt)
 
+        print_debug("MEAN_RTT_E: ", mean_rtt_e)
+
         if mean_rtt_e < 0:
             ttl += 1
             continue
