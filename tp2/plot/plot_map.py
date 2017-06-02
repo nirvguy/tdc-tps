@@ -27,8 +27,9 @@ for i in range(len(coords)-1):
     ip0, lat0, long0 = coords[i]
     x.append(long0)
     y.append(lat0)
-    rx, ry = m(long0+5, lat0+5)
-    ax.annotate(ip0, (rx, ry), color='g')
+    if i == 0:
+        rx, ry = m(long0-5, lat0-5)
+        ax.annotate(ip0, (rx, ry), color="g")
     ip1, lat1, long1 = coords[i+1]
     x.append(long1)
     y.append(lat1)
