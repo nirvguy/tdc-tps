@@ -27,6 +27,7 @@ def traceroute(ipdst, packets_per_host=30, timeout=2, iface=None,
         extra_args = {'iface' : iface}
     ttl = 1
     bounded = False
+    discarded = 0
     # RTTs totales de cada paquete para el ttl anterior
     while ttl <= max_ttl and not bounded:
         # Diccionario con las ips que van apareciendo para el mismo ttl
@@ -89,6 +90,7 @@ def traceroute(ipdst, packets_per_host=30, timeout=2, iface=None,
 
         if mean_rtt_e < 0:
             ttl += 1
+            discarded += 1
             continue
 
         result.append({'ip':ip,
@@ -97,7 +99,7 @@ def traceroute(ipdst, packets_per_host=30, timeout=2, iface=None,
                        'mean_rtt_e': mean_rtt_e})
         ttl += 1
 
-    return result
+    return result, discarded/(discarded+len(result))
 
 table_t = [None,       # n = 0
            None,       # n = 1
@@ -143,7 +145,7 @@ def main():
     parser.add_argument("--no-use-json", dest='use_json', action='store_false', help="No imprime la salida en formato json. Por defecto.")
     parser.set_defaults(use_json=False)
     args = parser.parse_args()
-    trace = traceroute(args.ip,
+    trace,discarded = traceroute(args.ip,
                        iface=args.iface,
                        timeout=args.timeout,
                        max_ttl=args.max_ttl,
@@ -156,6 +158,7 @@ def main():
 
     value_table = table_t[len(trace)]
 
+    print_debug("Descartadas: {:3.2f}%".format(discarded * 100))
     print_debug("n: " + str(len(trace)))
     print_debug("AVG(ms): " + str(mu_delta_rtts * 1000))
     print_debug("STD(ms): " + str(std_delta_rtts * 1000))
