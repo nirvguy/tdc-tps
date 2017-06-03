@@ -1,0 +1,45 @@
+{
+      "trace": [
+            {
+                  "mean_rtt_e": 0.017417119099543646,
+                  "std_total_rtt": 0.009183775544344859,
+                  "norm_rtt": 0.6013981732983885,
+                  "intercontinental": false,
+                  "ip": "0.0.0.0",
+                  "mean_total_rtt": 0.017417119099543646
+            },
+            {
+                  "mean_rtt_e": 0.005189968989445612,
+                  "std_total_rtt": 0.023598734942123733,
+                  "norm_rtt": 0.957706461878217,
+                  "intercontinental": false,
+                  "ip": "10.242.1.17",
+                  "mean_total_rtt": 0.022607088088989258
+            },
+            {
+                  "mean_rtt_e": 0.08107739686965942,
+                  "std_total_rtt": 0.012846110802303756,
+                  "norm_rtt": 1.2537098787450314,
+                  "intercontinental": false,
+                  "ip": "195.22.222.15",
+                  "mean_total_rtt": 0.10368448495864868
+            },
+            {
+                  "mean_rtt_e": 0.07848104605307946,
+                  "std_total_rtt": 0.011500702388598606,
+                  "norm_rtt": 1.178050276329221,
+                  "intercontinental": false,
+                  "ip": "89.221.37.151",
+                  "mean_total_rtt": 0.18216553101172814
+            },
+            {
+                  "mean_rtt_e": 0.008108594988146395,
+                  "std_total_rtt": 0.023320502824216823,
+                  "norm_rtt": 0.8726555198976469,
+                  "intercontinental": false,
+                  "ip": "200.0.16.25",
+                  "mean_total_rtt": 0.19027412599987453
+            }
+      ],
+      "value_table": 1.5712
+}
