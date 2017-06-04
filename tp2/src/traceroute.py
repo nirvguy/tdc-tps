@@ -12,6 +12,11 @@ def print_debug(*args, **kwargs):
     if DEBUG:
         print(*args, **kwargs, file=sys.stderr)
 
+def get_rtts(total_rtts, prev_mean_total_rtt):
+    mean_total_rtt, std_total_rtt = mean_std(total_rtts)
+    mean_rtt_e = mean_total_rtt - prev_mean_total_rtt
+    return mean_total_rtt, std_total_rtt, mean_rtt_e
+
 def traceroute(ipdst, packets_per_ttl=30, timeout=2, iface=None,
                verbose=False, max_ttl=30):
     """ Traceroute mediante el metodo de ttl seeder
@@ -25,10 +30,15 @@ def traceroute(ipdst, packets_per_ttl=30, timeout=2, iface=None,
     extra_args = {}
     if iface:
         extra_args = {'iface' : iface}
+
+    # RTTS
+    mean_total_rtt = None # Promedio RTTs totales
+    std_total_rtt = None # Desviacion estandar RTTS totales
+    mean_rtt_e = None # Promedio de RTT del enlace
+
     ttl = 1
     bounded = False
-    discarded = 0
-    # RTTs totales de cada paquete para el ttl anterior
+
     while ttl <= max_ttl and not bounded:
         # Diccionario con las ips que van apareciendo para el mismo ttl
         ips = dict()
@@ -71,21 +81,14 @@ def traceroute(ipdst, packets_per_ttl=30, timeout=2, iface=None,
         # Extrae de todas las ips la que mas aparecio
         ip = max(ips.items(),key=operator.itemgetter(1))[0]
 
-        mean_total_rtt = None
-        std_total_rtt = None
-        mean_rtt_e = None
         # Mide el RTT del salto actual restando
         # el RTT total actual y el RTT total anterior
         if result:
-            mean_total_rtt = mean(total_rtt)
-            mean_rtt_e = mean_total_rtt - result[-1]['mean_total_rtt']
-
-
-            std_total_rtt = std(total_rtt, mu=mean_total_rtt)
+            mean_total_rtt, std_total_rtt, mean_rtt_e = get_rtts(total_rtt,
+                                                                 result[-1]['mean_total_rtt'])
         else: # Si es el primer salto, rtt total = rtt salto
-            mean_total_rtt = mean_rtt_e = mean(total_rtt)
-
-            std_total_rtt = std(total_rtt, mu=mean_total_rtt)
+            mean_total_rtt, std_total_rtt, mean_rtt_e = get_rtts(total_rtt,
+                                                                 0)
 
         print_debug("MEAN_RTT_E: ", mean_rtt_e)
 
@@ -154,8 +157,7 @@ def main():
     delta_rtts = [e['mean_rtt_e'] for e in trace]
     print_debug(delta_rtts)
 
-    mu_delta_rtts = mean(delta_rtts)
-    std_delta_rtts = std(delta_rtts, mu_delta_rtts)
+    mu_delta_rtts, std_delta_rtts = mean_std(delta_rtts)
 
     value_table = table_t[len(trace)]
 
