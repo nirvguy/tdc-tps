@@ -97,7 +97,8 @@ def traceroute(ipdst, packets_per_ttl=30, timeout=2, iface=None,
             discarded += 1
             continue
 
-        result.append({'ip':ip,
+        result.append({'ttl': ttl,
+                       'ip':ip,
                        'mean_total_rtt' : mean_total_rtt,
                        'std_total_rtt' : std_total_rtt,
                        'mean_rtt_e': mean_rtt_e})
@@ -178,14 +179,14 @@ def main():
         print(json.dumps({'trace' : trace,
                           'value_table': value_table }, indent=6))
     else:
-        print("IP \t Total RTT \t Std Total RTT \t Delta RTT \t Z Delta RTT \t Intercontinental ")
+        print("TTL \t IP \t Total RTT \t Std Total RTT \t Delta RTT \t Z Delta RTT \t Intercontinental ")
         for t in trace:
-            print("{} \t {:3.3f} ms \t {:3.3f} ms \t {:3.3f} ms \t {:1.3f} \t {}".format(t['ip'],
-                                                                                t['mean_total_rtt'] * 1000,
-                                                                                t['std_total_rtt'] * 1000,
-                                                                                t['mean_rtt_e'] * 1000,
-                                                                                t['norm_rtt'],
-                                                                                t['intercontinental']))
+            print("{} \t {} \t {:3.3f} ms \t {:3.3f} ms \t {:3.3f} ms \t {:1.3f} \t {}".format(t['ttl'], t['ip'],
+                                                                                               t['mean_total_rtt'] * 1000,
+                                                                                               t['std_total_rtt'] * 1000,
+                                                                                               t['mean_rtt_e'] * 1000,
+                                                                                               t['norm_rtt'],
+                                                                                               t['intercontinental']))
         print("Valor Table t: ", value_table)
 
 if __name__ == '__main__':
