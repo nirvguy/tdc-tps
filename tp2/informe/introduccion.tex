@@ -1,9 +1,14 @@
-En este trabajo se desarrolló una herramienta conocida como traceroute. Esta
+En este trabajo se desarrolló una herramienta conocida como traceroute con
+la finalidad de poder reconocer algunos de los cables intercontinentales
+que se encuentran en uso actualmente. Esta herramienta
 consta en descubir cual es la ruta a un determinado host en la transmisión 
-de un paquete de un dispositivo a otro. En otras palabras, qué routers estan
-involucrados desde que el paquete sale hasta que llega al host destinatario.
+de un paquete de un dispositivo a otro (qué routers estan
+involucrados desde que el paquete sale hasta que llega al host destinatario)
+para asi poder comprobar cuales enlaces son intercontinentales 
+observando un comportamiento atípico en las mediciones de los
+Tiempos de Round-Trip de cada enlace de la ruta.
 
-Para llevar esto a cabo hay, al menos, dos posibles alternativas. El primer
+Para el descubrimiento de la ruta existen, al menos, dos posibles alternativas. El primer
 algoritmo consiste en la técnica llamada \emph{TTL seeder} sobre el protocolo
 ICMP que se explicará a continuación. La segunda, especificada en el \emph{RFC
 1393} \cite{rfc1393}, hace uso de ciertas opciones avanzadas de los datagramas IP en donde
