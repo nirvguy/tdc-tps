@@ -44,6 +44,8 @@ def traceroute(ipdst, packets_per_ttl=30, timeout=2, iface=None,
     while ttl <= max_ttl and not bounded:
         # Diccionario con las ips que van apareciendo para el mismo ttl
         ips = dict()
+
+        # RTTS totales que van apareciendo para el mismo TTL
         total_rtt = []
 
         for i in range(packets_per_ttl):
