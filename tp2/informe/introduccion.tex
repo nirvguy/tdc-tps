@@ -1,1 +1,15 @@
+En este trabajo se desarrolló una herramienta conocida como traceroute. Esta
+consta en descubir cual es la ruta a un determinado host en la transmisión 
+de un paquete de un dispositivo a otro. En otras palabras, qué routers estan
+involucrados desde que el paquete sale hasta que llega al host destinatario.
 
+Para llevar esto a cabo hay, al menos, dos posibles alternativas. El primer
+algoritmo consiste en la técnica llamada \emph{TTL seeder} sobre el protocolo
+ICMP que se explicará a continuación. La segunda, especificada en el \emph{RFC
+1393} \cite{rfc1393}, hace uso de ciertas opciones avanzadas de los datagramas IP en donde
+cada router (gateway) pone su dirección IP en el paquete TCP/IP. Las ventajas
+de este último algoritmo es que este da la ruta efectiva
+cuando el primero solo da una aproximación. Pero cuenta con la desventaja de que no es un standard
+y por tanto es posible que haya routers (gateways) que no lo
+implementen. Es por esto que en este trabajo se implementará el primer
+algoritmo.
