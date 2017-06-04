@@ -26,7 +26,9 @@ def traceroute(ipdst, packets_per_ttl=30, timeout=2, iface=None,
         @param iface  Interface
         @timeout Timeout de cada paquete
     """
+    discarded = []
     result = []
+
     extra_args = {}
     if iface:
         extra_args = {'iface' : iface}
@@ -93,8 +95,9 @@ def traceroute(ipdst, packets_per_ttl=30, timeout=2, iface=None,
         print_debug("MEAN_RTT_E: ", mean_rtt_e)
 
         if mean_rtt_e < 0:
+            discarded.append({'ttl': ttl,
+                              'ip':ip})
             ttl += 1
-            discarded += 1
             continue
 
         result.append({'ttl': ttl,
@@ -104,7 +107,7 @@ def traceroute(ipdst, packets_per_ttl=30, timeout=2, iface=None,
                        'mean_rtt_e': mean_rtt_e})
         ttl += 1
 
-    return result, discarded/(discarded+len(result))
+    return result, discarded
 
 table_t = [None,       # n = 0
            None,       # n = 1
@@ -150,11 +153,11 @@ def main():
     parser.add_argument("--no-use-json", dest='use_json', action='store_false', help="No imprime la salida en formato json. Por defecto.")
     parser.set_defaults(use_json=False)
     args = parser.parse_args()
-    trace,discarded = traceroute(args.ip,
-                       iface=args.iface,
-                       timeout=args.timeout,
-                       max_ttl=args.max_ttl,
-                       packets_per_ttl=args.packets_per_ttl)
+    trace, discarded = traceroute(args.ip,
+                                  iface=args.iface,
+                                  timeout=args.timeout,
+                                  max_ttl=args.max_ttl,
+                                  packets_per_ttl=args.packets_per_ttl)
     delta_rtts = [e['mean_rtt_e'] for e in trace]
     print_debug(delta_rtts)
 
@@ -162,10 +165,10 @@ def main():
 
     value_table = table_t[len(trace)]
 
-    print_debug("Descartadas: {:3.2f}%".format(discarded * 100))
     print_debug("n: " + str(len(trace)))
     print_debug("AVG(ms): " + str(mu_delta_rtts * 1000))
     print_debug("STD(ms): " + str(std_delta_rtts * 1000))
+    print_debug("discarded: {:3.2f}%".format(len(discarded) / (len(trace) + len(discarded)) * 100))
     print_debug("Table: " + str(table_t[len(trace)]))
     print_debug("min, max: {} ms a {} ms".format((-table_t[len(trace)] * std_delta_rtts + mu_delta_rtts) * 1000,\
                                                  (table_t[len(trace)] * std_delta_rtts + mu_delta_rtts) * 1000))
@@ -177,6 +180,7 @@ def main():
 
     if args.use_json:
         print(json.dumps({'trace' : trace,
+                          'discarded' : discarded,
                           'value_table': value_table }, indent=6))
     else:
         print("TTL \t IP \t Total RTT \t Std Total RTT \t Delta RTT \t Z Delta RTT \t Intercontinental ")
@@ -188,6 +192,11 @@ def main():
                                                                                                t['norm_rtt'],
                                                                                                t['intercontinental']))
         print("Valor Table t: ", value_table)
+
+        print("Descartados:")
+        print("TTL \t IP")
+        for d in discarded:
+            print("{} \t {}".format(d['ttl'], d['ip']))
 
 if __name__ == '__main__':
     main()
