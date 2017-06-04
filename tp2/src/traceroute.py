@@ -12,11 +12,11 @@ def print_debug(*args, **kwargs):
     if DEBUG:
         print(*args, **kwargs, file=sys.stderr)
 
-def traceroute(ipdst, packets_per_host=30, timeout=2, iface=None,
-               verbose=False, max_ttl=100):
+def traceroute(ipdst, packets_per_ttl=30, timeout=2, iface=None,
+               verbose=False, max_ttl=30):
     """ Traceroute mediante el metodo de ttl seeder
         @param ipdst Ip de destino
-        @param packets_per_host Cuantos paquetes se envían
+        @param packets_per_ttl Cuantos paquetes se envían
                                 para el mismo ttl
         @param iface  Interface
         @timeout Timeout de cada paquete
@@ -33,7 +33,8 @@ def traceroute(ipdst, packets_per_host=30, timeout=2, iface=None,
         # Diccionario con las ips que van apareciendo para el mismo ttl
         ips = dict()
         total_rtt = []
-        for i in range(packets_per_host):
+
+        for i in range(packets_per_ttl):
             # Envia el paquete cronometrando cuanto tiempo tarda
             # entre que se envia y se recibe para conseguir
             # un RTT aproximado
@@ -138,9 +139,9 @@ def main():
     parser = argparse.ArgumentParser(description='Traceroute')
     parser.add_argument('ip', type=str, help='Ip de destino')
     parser.add_argument('--iface', type=str, default='', help="Interfaz de red")
-    parser.add_argument('--packets-per-host', type=int, default=30, help="Packets por host")
+    parser.add_argument('--packets-per-ttl', type=int, default=30, help="Paquetes por ttl")
     parser.add_argument('--timeout', type=int, default=2, help="Timeout de cada paquete en segundos")
-    parser.add_argument('--max-ttl', type=int, default=60, help="Max ttl")
+    parser.add_argument('--max-ttl', type=int, default=30, help="Max ttl")
     parser.add_argument('-j', "--use-json", dest='use_json', action='store_true', help="Establece la salida en formato json")
     parser.add_argument("--no-use-json", dest='use_json', action='store_false', help="No imprime la salida en formato json. Por defecto.")
     parser.set_defaults(use_json=False)
@@ -149,7 +150,7 @@ def main():
                        iface=args.iface,
                        timeout=args.timeout,
                        max_ttl=args.max_ttl,
-                       packets_per_host=args.packets_per_host)
+                       packets_per_ttl=args.packets_per_ttl)
     delta_rtts = [e['mean_rtt_e'] for e in trace]
     print_debug(delta_rtts)
 
