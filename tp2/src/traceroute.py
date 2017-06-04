@@ -140,8 +140,8 @@ def main():
     value_table = table_t[len(trace)]
 
     print_debug("n: " + str(len(trace)))
-    print_debug("discarded: {:3.2f}%".format(len(discarded) / (len(trace) + len(discarded)) * 100))
     print_debug("% HOPs No time exceeded: {:3.2f}".format(p_ttl_no_time_exceeded * 100))
+    print_debug("% discarded: {:3.2f}%".format(len(discarded) / (len(trace) + len(discarded)) * 100))
     print_debug("Table: " + str(table_t[len(trace)]))
 
     for i, delta_rtt in enumerate(delta_rtts):
