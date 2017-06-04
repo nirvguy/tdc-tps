@@ -141,9 +141,9 @@ def main():
     print_debug("Table: " + str(table_t[len(trace)]))
 
     for i, delta_rtt in enumerate(delta_rtts):
-        n = abs((delta_rtt - mu_delta_rtts) / std_delta_rtts)
-        trace[i]['norm_rtt'] = n
-        trace[i]['intercontinental'] = n > value_table
+        z = abs((delta_rtt - mu_delta_rtts) / std_delta_rtts)
+        trace[i]['norm_rtt'] = z
+        trace[i]['intercontinental'] = z > value_table
 
     if args.use_json:
         print(json.dumps({'trace' : trace,
