@@ -2,7 +2,7 @@
 
 PDFLATEX=pdflatex
 INFORME=informe.pdf
-SRC=informe.tex introduccion.tex desarrollo.tex resultados.tex conclusiones.tex
+SRC=informe.tex introduccion.tex metodologia.tex resultados.tex conclusiones.tex
 
 all: $(INFORME)
 
