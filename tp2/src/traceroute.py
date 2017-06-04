@@ -159,19 +159,14 @@ def main():
                                   max_ttl=args.max_ttl,
                                   packets_per_ttl=args.packets_per_ttl)
     delta_rtts = [e['mean_rtt_e'] for e in trace]
-    print_debug(delta_rtts)
 
     mu_delta_rtts, std_delta_rtts = mean_std(delta_rtts)
 
     value_table = table_t[len(trace)]
 
     print_debug("n: " + str(len(trace)))
-    print_debug("AVG(ms): " + str(mu_delta_rtts * 1000))
-    print_debug("STD(ms): " + str(std_delta_rtts * 1000))
     print_debug("discarded: {:3.2f}%".format(len(discarded) / (len(trace) + len(discarded)) * 100))
     print_debug("Table: " + str(table_t[len(trace)]))
-    print_debug("min, max: {} ms a {} ms".format((-table_t[len(trace)] * std_delta_rtts + mu_delta_rtts) * 1000,\
-                                                 (table_t[len(trace)] * std_delta_rtts + mu_delta_rtts) * 1000))
 
     for i, delta_rtt in enumerate(delta_rtts):
         n = abs((delta_rtt - mu_delta_rtts) / std_delta_rtts)
