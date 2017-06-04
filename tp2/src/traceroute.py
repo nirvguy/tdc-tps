@@ -63,6 +63,7 @@ def traceroute(ipdst, packets_per_ttl=30, timeout=2, iface=None,
 
             tx, rx = packet[0][ICMP][0]
 
+            assert(rx.type == 0 or rx.type == 11)
             if rx.type == 0:
                 bounded = True
 
