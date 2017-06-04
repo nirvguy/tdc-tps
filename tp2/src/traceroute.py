@@ -4,7 +4,7 @@ import operator
 import argparse
 import json
 from scapy.all import *
-from utils import mean, std
+from utils import *
 
 DEBUG = True
 
