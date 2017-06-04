@@ -42,6 +42,8 @@ def traceroute(ipdst, packets_per_ttl=30, timeout=2, iface=None,
     ttl = 1
     bounded = False
 
+    no_time_exceeded = 0
+
     while ttl <= max_ttl and not bounded:
         # Diccionario con las ips que van apareciendo para el mismo ttl
         ips = dict()
@@ -81,6 +83,7 @@ def traceroute(ipdst, packets_per_ttl=30, timeout=2, iface=None,
         print_debug("--------------------------------------------")
 
         if not ips:
+            no_time_exceeded += 1
             ttl += 1
             continue
 
@@ -111,7 +114,7 @@ def traceroute(ipdst, packets_per_ttl=30, timeout=2, iface=None,
                        'mean_rtt_e': mean_rtt_e})
         ttl += 1
 
-    return result, discarded
+    return result, discarded, no_time_exceeded/ttl
 
 
 def main():
@@ -125,11 +128,11 @@ def main():
     parser.add_argument("--no-use-json", dest='use_json', action='store_false', help="No imprime la salida en formato json. Por defecto.")
     parser.set_defaults(use_json=False)
     args = parser.parse_args()
-    trace, discarded = traceroute(args.ip,
-                                  iface=args.iface,
-                                  timeout=args.timeout,
-                                  max_ttl=args.max_ttl,
-                                  packets_per_ttl=args.packets_per_ttl)
+    trace, discarded, p_ttl_no_time_exceeded = traceroute(args.ip,
+                                                          iface=args.iface,
+                                                          timeout=args.timeout,
+                                                          max_ttl=args.max_ttl,
+                                                          packets_per_ttl=args.packets_per_ttl)
     delta_rtts = [e['mean_rtt_e'] for e in trace]
 
     mu_delta_rtts, std_delta_rtts = mean_std(delta_rtts)
@@ -138,6 +141,7 @@ def main():
 
     print_debug("n: " + str(len(trace)))
     print_debug("discarded: {:3.2f}%".format(len(discarded) / (len(trace) + len(discarded)) * 100))
+    print_debug("% HOPs No time exceeded: {:3.2f}".format(p_ttl_no_time_exceeded * 100))
     print_debug("Table: " + str(table_t[len(trace)]))
 
     for i, delta_rtt in enumerate(delta_rtts):
