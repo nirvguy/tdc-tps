@@ -12,6 +12,24 @@ de Internet. Se utiliza en situaciones, y distintos própositos como
 	\item Se quiere saber la ruta a un determinado host (\textbf{traceroute})
 \end{itemize}
 
+\begin{figure}[ht]
+	\begin{center}
+		\includegraphics[width=0.8\columnwidth]{imagenes/icmp.png}
+		\caption{Paquete ICMP}
+		\label{fig:picmp}
+	\end{center}
+\end{figure}
+
+En la figura \ref{fig:picmp} se ilustran los diferentes campos, junto con
+las combinaciones de tipo/codigo de un paquete
+ICMP. Para el desarrollo de este trabajo nos interesarán principalmente
+el campo type, y más especificamente, dos valores que puede tomar durante
+la determinación de la ruta que son, Echo Reply y
+Time Exceeded. El paquete con tipo Time Exceeded lo envia el gateway al host
+de salida cuando el campo TTL (\emph{Time to Live}) llega a cero y
+por tanto debe descartar el forwadeo del datagrama original.
+
+
 \subsection{Algoritmo Traceroute}
 
 \subsubsection{Descripción del algoritmo}
