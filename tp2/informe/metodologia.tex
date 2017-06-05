@@ -96,8 +96,8 @@ atlantico). Una vez calculado el $\Delta RTT_{i}$ de cada enlace hasta llegar
 al ultimo host se realiza la normalización (se los lleva a la distribución normal)
 el valor de cada uno con la siguiente formula.
 
-\begin{equation}
-	Z_{i} = \frac{\Delta RTT_{i} - \overline{\Delta RTT}}{\sigma \left(\Delta RTT \right)}
+\begin{equation}\label{eq:z}
+	Z_{i} = \lvert\frac{\Delta RTT_{i} - \overline{\Delta RTT}}{\sigma \left(\Delta RTT \right)}\rvert
 \end{equation}
 
 Este valor $Z_{i}$ es de vital importancia ya que nos dice, estadisticamente,
