@@ -25,6 +25,8 @@ En los experimentos hechos se realizaron distintos tipos de gráficos
 	se complemente con la tabla antes mencionada.
 \end{itemize}
 
+Ademas para obtener un resultado estadistico consistente a lo largo de todas las
+experimentaciones, para cada TTL se realizaron 30 muestras.
 
 \clearpage
 
@@ -54,7 +56,7 @@ puede ver una diferencia considerable de RTT en la IP 195.22.222.15 y
 Haremos un mejor an\'alisis utilizando geolocalizaci\'on para intentar entender
 el camino del paquete. Tanto geoiptool como plotip nos dan dos caminos bastante
 distintos como muestran las tablas a continuaci\'on
- 
+
 \begin{figure}[ht]
 	\begin{subfigure}[b]{0.5\textwidth}
 		\centering
@@ -95,14 +97,19 @@ ambas herramientas para poder comparar visualmente los recorridos.
 		\centering
 		\includegraphics[width=\linewidth]{imagenes/mapa_habana_plotip.png}
 		\caption{PlotIP}
-	\end{subfigure} 
+	\end{subfigure}
 	\begin{subfigure}[b]{0.5\textwidth}
 		\centering
 		\includegraphics[width=\linewidth]{imagenes/mapa_habana_geoip.png}
 		\caption{GeoIPTool}
-	\end{subfigure} 
+	\end{subfigure}
 	\caption{Mapas generados a partir de las IP's usando PlotIP/GeoIPTool para la Universidad de La Habana}
 \end{figure}
+
+Por ultimo, en caso de que la verdadera ruta haya sido la que pasa por EEUU, entonces
+nuestro algoritmo dio un 100\% de acierto. Pero, si la ruta resulta ser la que pasa
+por Italia, entonces tendremos un falso negativo. En ese caso, para solucionarlo, podriamos
+usar un nivel de corte de aproximadamente 1.2.
 
 \clearpage
 \subsection{Universidad Estatal de Tomsk - Rusia}
@@ -116,7 +123,7 @@ TTL's respondieron Time Exceeded salvo por el ultimo que Respondio Echo Reply.
 Además se observo que de los 13 TTLS (de 1 al 13) que respondieron 6 fueron
 descartados por tiempos promedios de enlace negativos, dando asi una proporción
 de TTL descartados de 46.15\%, que si bien es bastante alta, los resultados
-btenidos fueron igual de representativos. 
+btenidos fueron igual de representativos.
 
 
 \subsubsection{Posiciones geográficas}
@@ -167,12 +174,12 @@ y se condice mejor con el grafico de los RTTs.
 		\includegraphics[width=\linewidth]{imagenes/mapa_tsu_plotip.png}
 		\caption{PlotIP}
 		\label{fig:mapa_tsu_plotip}
-	\end{subfigure} 
+	\end{subfigure}
 	\begin{subfigure}[b]{0.5\textwidth}
 		\centering
 		\includegraphics[width=\linewidth]{imagenes/mapa_tsu_geoip.png}
 		\caption{GeoIPTool}
-	\end{subfigure} 
+	\end{subfigure}
 	\caption{Mapas generados a partir de las IP's usando PlotIP/GeoIPTool para la Universidad Estatal de Tomsk - Rusia}
 	\label{fig:mapas_tsu}
 \end{figure}
@@ -186,7 +193,7 @@ de la tabla $t$ se encontraba en 1.71. El gateway que resulta intercontinental
 es el 195.22.214.131 y por lo visto anteriormente bien clasificado aun más
 siendo este un enlace transatlántico muy posiblemente submarino. El resto de los
 tiempos totales son bastante similares ya que como se puede comprobar en el mapa
-no son grandes distancias a comparación con la del intercontinental. Finalmente, 
+no son grandes distancias a comparación con la del intercontinental. Finalmente,
 en este caso el nivel de aciertos es del 100\% \footnote{Tomsk está considerado
 en el contiente européo y no asiático} segun el mapa de geoiptool (que es el que como se mencionó
 antes parece equivocarse menos) y por ende no haría falta modificar este valor de
