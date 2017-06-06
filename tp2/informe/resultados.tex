@@ -31,7 +31,12 @@ En los experimentos hechos se realizaron distintos tipos de gráficos
 
 En este experimento analizaremos como se comportan los paquetes enviados hasta la web de la Universidad de La Habana\footnote{http://www.uh.cu/}. Al momento de realizarse el experimento, su IP es 200.55.139.216.
 
- \includegraphics[scale=0.8]{imagenes/rtts_habana.png}
+\begin{figure}[ht]
+	\begin{center}
+		\includegraphics[width=0.8\columnwidth]{imagenes/rtts_habana.png}
+		\caption{Grafico de RTTS totales y de enlaces para la Universidad de La Habana}
+	\end{center}
+\end{figure}
 
 El largo de la ruta es de 5 y en el 100\% de los casos no responde Time exceeded. Adem\'as, podemos observar que ningun cable es considerado transatlantico, utilizando el algoritmo expuesto anteriormente, si bien se puede ver una diferencia considerable de RTT en la IP 195.22.222.15 y 89.221.37.151.  \\
 
