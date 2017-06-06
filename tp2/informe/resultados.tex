@@ -29,7 +29,9 @@ En los experimentos hechos se realizaron distintos tipos de gráficos
 
 \subsection{Universidad de La Habana}
 
-En este experimento analizaremos como se comportan los paquetes enviados hasta la web de la Universidad de La Habana\footnote{http://www.uh.cu/}. Al momento de realizarse el experimento, su IP es 200.55.139.216.
+En este experimento analizaremos como se comportan los paquetes enviados hasta
+la web de la Universidad de La Habana\footnote{http://www.uh.cu/}. Al momento
+de realizarse el experimento, su IP es 200.55.139.216.
 
 \begin{figure}[ht]
 	\begin{center}
@@ -38,9 +40,15 @@ En este experimento analizaremos como se comportan los paquetes enviados hasta l
 	\end{center}
 \end{figure}
 
-El largo de la ruta es de 5 y en el 100\% de los casos no responde Time exceeded. Adem\'as, podemos observar que ningun cable es considerado transatlantico, utilizando el algoritmo expuesto anteriormente, si bien se puede ver una diferencia considerable de RTT en la IP 195.22.222.15 y 89.221.37.151.  \\
+El largo de la ruta es de 5 y en el 100\% de los casos no responde Time
+exceeded. Adem\'as, podemos observar que ningun cable es considerado
+transatlantico, utilizando el algoritmo expuesto anteriormente, si bien se
+puede ver una diferencia considerable de RTT en la IP 195.22.222.15 y
+89.221.37.151.  \\
 
-Haremos un mejor an\'alisis utilizando geolocalizaci\'on para intentar entender el camino del paquete. Tanto geoiptool como plotip nos dan dos caminos bastante distintos como muestran las tablas a continuaci\'on
+Haremos un mejor an\'alisis utilizando geolocalizaci\'on para intentar entender
+el camino del paquete. Tanto geoiptool como plotip nos dan dos caminos bastante
+distintos como muestran las tablas a continuaci\'on
  
 \begin{figure}[ht]
 	\begin{subfigure}[b]{0.5\textwidth}
@@ -57,11 +65,25 @@ Haremos un mejor an\'alisis utilizando geolocalizaci\'on para intentar entender 
 \end{figure}
 
 
-Primero vemos que en plotip tiene poco sentido el camino de ir de Alemania a Estados Unidos a Grecia para luego volver a Cuba, adem\'as de que no se condice con los RTTs medidos. Al no poder ser procesada la IP 10.242.1.17 por geoiptool nos hace pensar que el caso de Alemania puede estar mal. Con esto en mente, lo mas factible viendo los resultados de plotip es el camino Buenos Aires - Estados Unidos - Cuba. Descartamos Grecia porque creemos que no tiene sentido hacer ese trayecto por la localizaci\'on tan cercana de Cuba a Estados Unidos.\\
+Primero vemos que en plotip tiene poco sentido el camino de ir de Alemania a
+Estados Unidos a Grecia para luego volver a Cuba, adem\'as de que no se condice
+con los RTTs medidos. Al no poder ser procesada la IP 10.242.1.17 por geoiptool
+nos hace pensar que el caso de Alemania puede estar mal. Con esto en mente, lo
+mas factible viendo los resultados de plotip es el camino Buenos Aires -
+Estados Unidos - Cuba. Descartamos Grecia porque creemos que no tiene sentido
+hacer ese trayecto por la localizaci\'on tan cercana de Cuba a Estados
+Unidos.\\
 
-En geoiptool, nos da un camino que puede ser valido ya que es ir a Italia para luego ir a Cuba. Si bien la distancia de Buenos Aires a Estados Unidos es tan grande como la que separa a algunos continentes, resulta raro que no haya detectado ningun camino intercontinental nuestro algoritmo. Esto nos hace ver como mas posible entre ambos caminos el primero. Igualmente es posible que el nivel de corte calculado con el metodo de Cimbala sea muy grande en este caso.\\
+En geoiptool, nos da un camino que puede ser valido ya que es ir a Italia para
+luego ir a Cuba. Si bien la distancia de Buenos Aires a Estados Unidos es tan
+grande como la que separa a algunos continentes, resulta raro que no haya
+detectado ningun camino intercontinental nuestro algoritmo. Esto nos hace ver
+como mas posible entre ambos caminos el primero. Igualmente es posible que el
+nivel de corte calculado con el metodo de Cimbala sea muy grande en este
+caso.\\
 
-Presentamos los graficos generados utilizando la localizaci\'on provista por ambas herramientas para poder comparar visualmente los recorridos.
+Presentamos los graficos generados utilizando la localizaci\'on provista por
+ambas herramientas para poder comparar visualmente los recorridos.
 
 \begin{figure}[ht]
 	\begin{subfigure}[b]{0.5\textwidth}
