@@ -40,8 +40,8 @@ de realizarse el experimento, su IP es 200.55.139.216.
 	\end{center}
 \end{figure}
 
-El largo de la ruta es de 5 y en el 100\% de los casos no responde Time
-exceeded. Adem\'as, podemos observar que ningun cable es considerado
+El largo de la ruta es de 5 y no hubo casos en los que para un TTL no respondiera
+Time Exceeded o Echo Replay. Adem\'as, podemos observar que ningun cable es considerado
 transatlantico, utilizando el algoritmo expuesto anteriormente, si bien se
 puede ver una diferencia considerable de RTT en la IP 195.22.222.15 y
 89.221.37.151.  \\
@@ -99,18 +99,47 @@ ambas herramientas para poder comparar visualmente los recorridos.
 	\caption{Mapas generados a partir de las IP's usando PlotIP/GeoIPTool para la Universidad de La Habana}
 \end{figure}
 
+\clearpage
 \subsection{Universidad Estatal de Tomsk - Rusia}
 
-\subsection{Round Trip Times}
+En este experimento se analizaron las rutas a la página web
+\url{http://www.tsu.ru/} de la Universidad Estatal de Tomsk en Tomsk, Rusía que
+en su momento tenía IP 92.63.64.162\footnote{esta IP en el analisis y los
+gráficos no aparece debido a que su tiempo de enlace con el gateway anterior
+fue negativo}. Durante el monitoreo del experimento se observó que para los
+TTL's respondieron Time Exceeded salvo por el ultimo que Respondio Echo Reply.
+Además se observo que de los 13 TTLS (de 1 al 13) que respondieron 6 fueron
+descartados por tiempos promedios de enlace negativos, dando asi una proporción
+de TTL descartados de 46.15\%, que si bien es bastante alta, los resultados
+btenidos fueron igual de representativos. 
 
-\begin{figure}[ht]
-	\begin{center}
-		\includegraphics[width=0.8\columnwidth]{imagenes/rtts_tsu.png}
-		\caption{Grafico de RTTS totales y de enlaces para la Universidad Estatal de Tomsk - Rusia}
-	\end{center}
-\end{figure}
 
-\subsubsection{Mapas}
+\subsubsection{Posiciones geográficas}
+
+Se observaron las posiciones geográficas como las ciudades y paises segun los
+mismos servicios de geolocalizacion que se vienen usando (geoiptool y plotip)
+y se observaron las rutas desde Buenos Aires, Argentina hasta Tomsk, Rusia.
+
+Como se puede notar en las tablas \ref{dig:lugares_tsu} la herramienta PlotIP
+presentó ciertas rutas anómalas que no se condicen con los tiempos de enlaces
+como se puede ver más adelante. Estas posiciones son las de las IP
+181.88.170.46, 181.88.109.37 que segun PlotIp se situan en Indonesia,
+realizando desde argentina un salto muy grande inexplicable desde los graficos
+de los tiempos totales que para esas ips son muy chicos.
+Por lo que se concluyó que estos son gateways de Argentina mal clasificados por
+PlotIP. Es por esto que se descarta estas IPS (181.88.170.46, 181.88.109.37)
+del mapa generado segun PlotIP que se puede ver en la figura
+\ref{fig:mapa_tsu_plotip}.
+
+Otro salto poco probable, pero aun no tanto como el anterior, es el de
+Belgica-Khabarovsk-Tomsk que cruza desde Bélica, Alemania en Europa hacia
+Khabarovsk, Rusia en Asia volviendo a la parte Europea donde se encuentra Tomsk.
+Esto es tambien poco contrastable con respecto a los RTTs totales, aunque no tanto
+y es por eso que se conservo en el grafico del Mapa (figura \ref{fig:mapa_tsu_plotip}).
+
+Analizando la otra ruta generada a partir de geoiptool esta resulta ser
+mas consistente que la que brinda plotip en donde se ve que esta es más directa
+y se condice mejor con el grafico de los RTTs.
 
 \begin{figure}[ht]
 	\begin{subfigure}[b]{0.5\textwidth}
@@ -124,6 +153,7 @@ ambas herramientas para poder comparar visualmente los recorridos.
 		\caption{GeoIPTool}
 	\end{subfigure}
 	\caption{Ciudades y Paises de las IP's usando PlotIP/GeoIPTool para la Universidad Estatal de Tomsk - Rusia}
+	\label{fig:lugares_tsu}
 \end{figure}
 
 \begin{figure}[ht]
@@ -131,6 +161,7 @@ ambas herramientas para poder comparar visualmente los recorridos.
 		\centering
 		\includegraphics[width=\linewidth]{imagenes/mapa_tsu_plotip.png}
 		\caption{PlotIP}
+		\label{fig:mapa_tsu_plotip}
 	\end{subfigure} 
 	\begin{subfigure}[b]{0.5\textwidth}
 		\centering
@@ -138,4 +169,27 @@ ambas herramientas para poder comparar visualmente los recorridos.
 		\caption{GeoIPTool}
 	\end{subfigure} 
 	\caption{Mapas generados a partir de las IP's usando PlotIP/GeoIPTool para la Universidad Estatal de Tomsk - Rusia}
+	\label{fig:mapas_tsu}
+\end{figure}
+
+\subsection{Round Trip Times}
+
+Al analizar los graficos de RTT's que se muestra en la figura
+\ref{fig:rtts_tsu} se observa que el método dio un único enlace
+intercontinental ya que para ese tamaño de muestra (7) el valor de referencia
+de la tabla $t$ se encontraba en 1.71. El gateway que resulta intercontinental
+es el 195.22.214.131 y por lo visto anteriormente bien clasificado aun más
+siendo este un enlace transatlántico muy posiblemente submarino. El resto de los
+tiempos totales son bastante similares ya que como se puede comprobar en el mapa
+no son grandes distancias a comparación con la del intercontinental. Finalmente, 
+en este caso el nivel de aciertos es del 100\% \footnote{Tomsk está considerado
+en el contiente européo y no asiático} segun el mapa de geoiptool (que es el que como se mencionó
+antes parece equivocarse menos) y por ende no haría falta modificar este valor de
+la tabla $t$ ni aplicar ningún criterio de corte ad-hoc para este problema.
+
+\begin{figure}[ht]\label{fig:rtts_tsu}
+	\begin{center}
+		\includegraphics[width=0.8\columnwidth]{imagenes/rtts_tsu.png}
+		\caption{Grafico de RTTS totales y de enlaces para la Universidad Estatal de Tomsk - Rusia}
+	\end{center}
 \end{figure}
