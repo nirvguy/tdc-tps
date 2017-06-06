@@ -26,12 +26,15 @@ En los experimentos hechos se realizaron distintos tipos de gráficos
 \end{itemize}
 
 
+\clearpage
 
 \subsection{Universidad de La Habana}
 
 En este experimento analizaremos como se comportan los paquetes enviados hasta
 la web de la Universidad de La Habana\footnote{http://www.uh.cu/}. Al momento
 de realizarse el experimento, su IP es 200.55.139.216.
+
+\subsubsection{Round Trip Times}
 
 \begin{figure}[ht]
 	\begin{center}
@@ -45,6 +48,8 @@ Time Exceeded o Echo Replay. Adem\'as, podemos observar que ningun cable es cons
 transatlantico, utilizando el algoritmo expuesto anteriormente, si bien se
 puede ver una diferencia considerable de RTT en la IP 195.22.222.15 y
 89.221.37.151.  \\
+
+\subsubsection{Posiciones geográficas}
 
 Haremos un mejor an\'alisis utilizando geolocalizaci\'on para intentar entender
 el camino del paquete. Tanto geoiptool como plotip nos dan dos caminos bastante
@@ -172,7 +177,7 @@ y se condice mejor con el grafico de los RTTs.
 	\label{fig:mapas_tsu}
 \end{figure}
 
-\subsection{Round Trip Times}
+\subsubsection{Round Trip Times}
 
 Al analizar los graficos de RTT's que se muestra en la figura
 \ref{fig:rtts_tsu} se observa que el método dio un único enlace
