@@ -4,6 +4,7 @@ from mpl_toolkits.basemap import Basemap
 import sys
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.patheffects as PathEffects
 
 def parse_longlat(line):
     str_ip, str_coord = line.strip().split("\t")
@@ -24,21 +25,27 @@ x = []
 y = []
 
 for i in range(len(coords)-1):
+    path_effects=[PathEffects.withStroke(linewidth=2,foreground="w")]
     ip0, lat0, long0 = coords[i]
     if i == 0:
-        x.append(m(long0, lat0)[0])
-        y.append(m(long0, lat0)[1])
-        rx, ry = m(long0-5, lat0-5)
-        ax.annotate(ip0, (rx, ry), color="purple", fontsize=14)
+        rx, ry = m(long0, lat0)
+        x.append(rx)
+        y.append(ry)
+        ax.annotate(ip0, (rx, ry), color="purple", fontsize=8,
+                    path_effects=path_effects)
     ip1, lat1, long1 = coords[i+1]
-    x.append(m(long1, lat1)[0])
-    y.append(m(long1, lat1)[1])
-    rx, ry = m(long1-5, lat1-5)
-    ax.annotate(ip1, (rx, ry), color="purple", fontsize=14)
+    rx, ry = m(long0, lat0)
+    x.append(rx)
+    y.append(ry)
+    rx, ry = m(long1, lat1)
+    ax.annotate(ip1, (rx, ry), color="purple", fontsize=8,
+                path_effects=path_effects)
     m.drawgreatcircle(long0, lat0, long1, lat1, linewidth=1, color='r')
 
+print(x)
+print(y)
 
-m.scatter(x,y, color='b')
+m.scatter(x,y, 40,color='green')
 
 m.drawlsmask(land_color = "#ddaa66", 
                ocean_color="#7777ff",
