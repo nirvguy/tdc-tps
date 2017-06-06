@@ -37,27 +37,20 @@ El largo de la ruta es de 5 y en el 100\% de los casos no responde Time exceeded
 
 Haremos un mejor an\'alisis utilizando geolocalizaci\'on para intentar entender el camino del paquete. Tanto geoiptool como plotip nos dan dos caminos bastante distintos como muestran las tablas a continuaci\'on
  
-\begin{table}
-\centering
-\begin{tabular}{|c|c|}
-10.242.1.17 & No puede procesar \\
-195.22.222.15 & Italia  \\
-89.221.37.151 & Italia \\
-200.0.16.25 & Cuba \\
-\end{tabular}
-\caption{Utilizando geoiptool}
-\end{table}
+\begin{figure}[ht]
+	\begin{subfigure}[b]{0.5\textwidth}
+		\centering
+		\input{imagenes/lugares_habana_plotip}
+		\caption{PlotIP}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.5\textwidth}
+		\centering
+		\input{imagenes/lugares_habana_geoip}
+		\caption{GeoIPTool}
+	\end{subfigure}
+	\caption{Ciudades y Paises de las IP's usando PlotIP/GeoIPTool para la Universidad de La Habana}
+\end{figure}
 
-\begin{table}
-\centering
-\begin{tabular}{|c|c|c|}
-10.242.1.17 & Aachen & Alemania \\
-195.22.222.15 & Chicago & Estados Unidos  \\
-89.221.37.151 &  & Grecia \\
-200.0.16.25 & La Habana & Cuba \\
-\end{tabular}
-\caption{Utilizando plotip}
-\end{table}
 
 Primero vemos que en plotip tiene poco sentido el camino de ir de Alemania a Estados Unidos a Grecia para luego volver a Cuba, adem\'as de que no se condice con los RTTs medidos. Al no poder ser procesada la IP 10.242.1.17 por geoiptool nos hace pensar que el caso de Alemania puede estar mal. Con esto en mente, lo mas factible viendo los resultados de plotip es el camino Buenos Aires - Estados Unidos - Cuba. Descartamos Grecia porque creemos que no tiene sentido hacer ese trayecto por la localizaci\'on tan cercana de Cuba a Estados Unidos.\\
 
@@ -65,17 +58,19 @@ En geoiptool, nos da un camino que puede ser valido ya que es ir a Italia para l
 
 Presentamos los graficos generados utilizando la localizaci\'on provista por ambas herramientas para poder comparar visualmente los recorridos.
 
-\begin{figure}
-	\centering
- 	\includegraphics[scale=0.8]{imagenes/mapa_cuba_2.png}
- 	\caption{Mapa generado usando plotip para la Universidad de La Habana}
-\end{figure} 
-
-\begin{figure}
-	\centering
- 	\includegraphics[scale=0.8]{imagenes/mapa_cuba_1.png}
- 	\caption{Mapa generado usando geoiptool para la Universidad de La Habana}
-\end{figure} 
+\begin{figure}[ht]
+	\begin{subfigure}[b]{0.5\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{imagenes/mapa_cuba_2.png}
+		\caption{PlotIP}
+	\end{subfigure} 
+	\begin{subfigure}[b]{0.5\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{imagenes/mapa_cuba_1.png}
+		\caption{GeoIPTool}
+	\end{subfigure} 
+	\caption{Mapas generados a partir de las IP's usando PlotIP/GeoIPTool para la Universidad Estatal de Tomsk - Rusia}
+\end{figure}
 
 \subsection{Universidad Estatal de Tomsk - Rusia}
 
@@ -84,23 +79,36 @@ Presentamos los graficos generados utilizando la localizaci\'on provista por amb
 \begin{figure}[ht]
 	\begin{center}
 		\includegraphics[width=0.8\columnwidth]{imagenes/rtts_tsu.png}
-		\caption{Grafico de RTTS totales y de enlaces para la Universidad Estatal de Tomsk}
+		\caption{Grafico de RTTS totales y de enlaces para la Universidad Estatal de Tomsk - Rusia}
 	\end{center}
 \end{figure}
 
 \subsubsection{Mapas}
 
-\input{imagenes/lugares_tsu_plotip}
-\input{imagenes/lugares_tsu_geoip}
-
-\begin{figure}{ht}
-	\centering
-	\includegraphics[scale=0.8]{imagenes/mapa_tsu_plotip.png}
-	\caption{Mapa generado usando plotip para la Universidad Estatal de Tomsk}
-\end{figure} 
+\begin{figure}[ht]
+	\begin{subfigure}[b]{0.5\textwidth}
+		\centering
+		\input{imagenes/lugares_tsu_plotip}
+		\caption{PlotIP}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.5\textwidth}
+		\centering
+		\input{imagenes/lugares_tsu_geoip}
+		\caption{GeoIPTool}
+	\end{subfigure}
+	\caption{Ciudades y Paises de las IP's usando PlotIP/GeoIPTool para la Universidad Estatal de Tomsk - Rusia}
+\end{figure}
 
 \begin{figure}[ht]
-	\centering
-	\includegraphics[scale=0.8]{imagenes/mapa_tsu_geoip.png}
-	\caption{Mapa generado usando geoiptool para la Universidad Estatal de Tomsk}
-\end{figure} 
+	\begin{subfigure}[b]{0.5\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{imagenes/mapa_tsu_plotip.png}
+		\caption{PlotIP}
+	\end{subfigure} 
+	\begin{subfigure}[b]{0.5\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{imagenes/mapa_tsu_geoip.png}
+		\caption{GeoIPTool}
+	\end{subfigure} 
+	\caption{Mapas generados a partir de las IP's usando PlotIP/GeoIPTool para la Universidad Estatal de Tomsk - Rusia}
+\end{figure}
