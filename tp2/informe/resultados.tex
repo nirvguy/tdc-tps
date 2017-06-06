@@ -111,7 +111,58 @@ nuestro algoritmo dio un 100\% de acierto. Pero, si la ruta resulta ser la que p
 por Italia, entonces tendremos un falso negativo. En ese caso, para solucionarlo, podriamos
 usar un nivel de corte de aproximadamente 1.2.
 
-\clearpage
+\subsection{Red de Tecnología Australiana}
+
+En este experimento se observo el trayecto que nos devuelve la herramienta de \textit{traceroute} para \url{http://www.atn.edu.au/}, la página de la Red de Tecnología Australiana que compone un total de 5 universidades, y cuya IP es 130.220.0.127 (al menos al momento de la presente experimentación). Como resultado pudimos trazar una ruta de 24 HOPs, de los cuales la mayoria no tienen representación en los graficos. Esto se debe a dos razones, la primera es que para 5 de los TTL's (aproximadamente el 20\%) obtuvimos un Time Exceeded. La otra razon es que para 8 de los TTL's (aproximadamente el 42.11\%) el cálculo del $\Delta RTT$ nos devolvio un valor negativo, y por ende los descartamos conciderandolos como parte del enlace, y no como un nodo del trayecto. No obstante los 11 restantes HOPs fueron suficiente para obtener una idea del camino aproximado.
+
+\subsubsection{Posiciones geográficas}
+
+Al igual que en el caso anterior, para esta experimentación se intento darle una referencia geografica aproximada a cada uno de los salto no descartados. Para esto acudimos a dos servicios de geolocalización de IPs, PlotIP y GeoIPTool. Ambos servicios sugirieron para cada IP una ubicación aproximadamente parecida para la mayoria de las IPs, o por lo menos siempre coincidieron en el pais de alocación de cada una, no obstante hubo algunas discrepancias. Por ejemplo para la IP 64.125.13.241 el servicio de PlotIP la localiza en New York, y GeoIPTool en Louisville, que según los mapas geograficos mantienen una buena distancia. Pensamos que esto se debe a que quizas simplemente alguno de los dos esta mas actualizado. También hubo diferencias con respecto a la geolocalización de las IPs de Australia, a varias PlotIP las localiza en Wahroonga y GeoPlotIP en Canberra, aunque a diferencia del caso anterior no hay tanta distacia entre ambas ciudades. El único caso particular en Australia es el de la IP 202.158.194.161, en donde claramente Perth guarda una distancia no despreciable con respecto a Surry Hills.
+
+Mas alla de las mencionadas discrepancias, de ambos servicios pudimos estimar una ruta bastante clara con respecto a los paises visitados. Desde el pais de origen (Argentina), se hizo un salto de larga distancia a Estados Unidos, para luego partir finalmente a Australia, por lo que suponemos algun cable submarino. Si bien el desvio de Argentina a Estados Unidos resulta en un trayecto geograficamente mucho mas largo que el de la mínima distacia de Argentina a Australia, lo contemplamos como un resultados bastante esperable al contrastarlo con el mapa de cables intercontinentales, ya que la gran mayoria de ellos en América salen de Estados Unidos, y no parece haber ninguna ruta mas directa hacia Australia. Por ende los mapas realizados para los datos provenientes de ambos servicios resultaron muy similares. Las unicas pequeñas desviaciones son las que supusieron las discrepancias del caso de New York-Lousville, y Surry Hills-Perth explicados anteriormente.
+
+\begin{figure}[ht]
+	\begin{subfigure}[b]{0.5\textwidth}
+		\centering
+		\input{imagenes/lugares_australia_plotip}
+		\caption{PlotIP}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.5\textwidth}
+		\centering
+		\input{imagenes/lugares_australia_geoip}
+		\caption{GeoIPTool}
+	\end{subfigure}
+	\caption{Ciudades y Paises de las IP's usando PlotIP/GeoIPTool para la Red de Tecnología Australiana}
+	\label{fig:lugares_australia}
+\end{figure}
+
+\begin{figure}[ht]
+	\begin{subfigure}[b]{0.5\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{imagenes/mapa_australia_plotip.png}
+		\caption{PlotIP}
+		\label{fig:mapa_tsu_plotip}
+	\end{subfigure} 
+	\begin{subfigure}[b]{0.5\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{imagenes/mapa_australia_geoip.png}
+		\caption{GeoIPTool}
+	\end{subfigure} 
+	\caption{Mapas generados a partir de las IP's usando PlotIP/GeoIPTool para la Red de Tecnología Australiana}
+	\label{fig:mapas_australia}
+\end{figure}
+
+\subsubsection{Round Trip Times}
+
+Para este caso el metodo propuesto nos sugirió dos cables intercontinentales por los que supuestamente se trazo la ruta, uno al saltar a la IP 67.17.99.233 y otro a la IP 202.158.194.161. No obstante en base a las tables y mapas realizados de acuerdo a PlotIP y GeoIPTool, concluimos que la deducción del supuesto salto intercontinental al partir a la IP 67.17.99.233 es un falso positivo, simplemente mal catalogado por ser un salto muy largo que resulto en un relativamente alto RTT. Esta conlusión se sostiene en base a que la IP 67.17.99.233 corresponde a Estados Unidos, y dado que en el medio no parece haber saltado a algun otro continente, lo mas probable sea que simplemente el recorrido de Argentina a Estados Unidos tuvo asociado un $\Delta RTT$ muy alto, lo cual es razonable dado la distacia geografica. A su vez es posible que esto último tambien se deba a la existencia de cables submarinos de larga distancia que van de un punto de América a otro punto del mismo continente, lo cual podría suponer tiempos relativamente altos de propagación tal como ocurre con los cables intercontinentales. Por el contrario el cable intercontinental sugerido al partir a la IP 202.158.194.161, parece concordar con el resto de los datos recabados. Dicha IP es la primera IP de Australia a la que se llega por la ruta obtenida, y dado que el anterior HOP segun los servicios de geolocalización se encuentra en Estados Unidos, el alto $\Delta RTT$ parece tener total sentido debido a que no parece haber habido otra alternativa que la de cruzar un cable intercontinental durante ese tramo para llegar a Australia.
+
+\begin{figure}[ht]\label{fig:rtts_tsu}
+	\begin{center}
+		\includegraphics[width=0.8\columnwidth]{imagenes/rtts_australia.png}
+		\caption{Grafico de RTTS totales y de enlaces para la Red de Tecnología Australiana}
+	\end{center}
+\end{figure}
+
 \subsection{Universidad Estatal de Tomsk - Rusia}
 
 En este experimento se analizaron las rutas a la página web
