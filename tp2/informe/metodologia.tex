@@ -108,11 +108,22 @@ gateway y considerarlo como que forma parte del enlace.
 
 \subsection{Determinación de enlace intercontinental}
 
+\begin{figure}[ht]
+	\begin{center}
+		\includegraphics[width=0.6\columnwidth]{imagenes/mapa-transcontinental.png}
+		\caption{Mapa con los cables intercontinentales existentes}
+	\end{center}
+\end{figure}
+
 El objetivo de este algoritmo además de brindar la ruta, es el de detectar de
 forma automática, cuando un enlace intermedio por el que es forwardeado el
 paquete es uno que cruza dos continentes, debiendose esto posiblemente a
 que el cable fisicamente es transatlantico (cables submarinos que cruzan el
-atlantico). Una vez calculado el $\Delta RTT_{i}$ de cada enlace hasta llegar
+atlantico). Por esto, agregamos el mapa conseguido en internet sobre los cables
+intercontinentales existentes para poder utilizar a la hora de comparar con
+los enlaces encontrados.
+
+Una vez calculado el $\Delta RTT_{i}$ de cada enlace hasta llegar
 al ultimo host se realiza la normalización (se los lleva a la distribución normal)
 el valor de cada uno con la siguiente formula.
 
